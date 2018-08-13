@@ -8,9 +8,10 @@ import React, { Component } from 'react';
 import {
   Platform,
   StyleSheet,
-  Text,
   View
 } from 'react-native';
+
+import {Button, Text} from 'native-base';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -30,6 +31,9 @@ export default class App extends Component<Props> {
         <Text style={styles.instructions}>
           To get started, edit App.js
         </Text>
+        <Button>
+          <Text> Test </Text>
+        </Button>
         <Text style={styles.instructions}>
           {instructions}
         </Text>
