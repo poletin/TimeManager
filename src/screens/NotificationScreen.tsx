@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { StatusBar } from "react-native";
 import {
   Container,
   Header,
@@ -10,16 +9,18 @@ import {
   Button,
   Body,
   Content,
-  Text,
-  Card,
-  CardItem
+  Text
 } from "native-base";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+import Hello from "../container/enthusiasm/Hello";
 
-type HomeProps = {
+type NotiProps = {
   navigation: NavigationScreenProp<NavigationState>;
 };
-export default class NotificationsScreen extends React.Component<HomeProps> {
+
+export default class NotificationsScreen extends React.Component<
+  NotiProps
+> {
   static navigationOptions = {
     drawerLabel: "Notifications",
     drawerIcon: () => <Icon name="pulse" />
@@ -46,8 +47,10 @@ export default class NotificationsScreen extends React.Component<HomeProps> {
           <Button onPress={() => this.props.navigation.goBack()}>
             <Text>Back to Home</Text>
           </Button>
+          <Hello/>
         </Content>
       </Container>
     );
   }
 }
+
