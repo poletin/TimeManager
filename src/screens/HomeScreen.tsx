@@ -15,6 +15,8 @@ import {
   CardItem
 } from "native-base";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+import store from "../store";
+import { userSignOut, userSignOutSuccess } from "../actions";
 
 type HomeProps = {
   navigation: NavigationScreenProp<NavigationState>;
@@ -22,9 +24,7 @@ type HomeProps = {
 export default class HomeScreen extends Component<HomeProps> {
   static navigationOptions = {
     drawerLabel: "Home",
-    drawerIcon: () => (
-        <Icon name="home" />
-    ),
+    drawerIcon: () => <Icon name="home" />
   };
 
   render() {
@@ -60,6 +60,14 @@ export default class HomeScreen extends Component<HomeProps> {
             onPress={() => this.props.navigation.navigate("Notifications")}
           >
             <Text>Notifications</Text>
+          </Button>
+          <Button
+            onPress={() => {
+              // Just a hack!!!
+              store.dispatch(userSignOut());
+            }}
+          >
+            <Text>Logout</Text>
           </Button>
         </Content>
       </Container>

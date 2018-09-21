@@ -1,4 +1,6 @@
 import firebase from "firebase";
+import store from "../store";
+import { userSignInSuccess } from "../actions";
 // Initialize Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyCZuPXiYld1BIFprp_LVSbNZKCpYXRUJGg",
@@ -9,5 +11,27 @@ const firebaseConfig = {
   messagingSenderId: "371301877277"
 };
 
-export const FirebaseApp = firebase.initializeApp(firebaseConfig);
-export * from './users';
+export const FirebaseApp = getApp();
+
+function getApp() {
+  return firebase.apps.length
+    ? firebase.apps[0]
+    : firebase.initializeApp(firebaseConfig);
+}
+
+export * from "./users";
+
+export const checkLoggedIn = function() {
+  getApp();
+  // Check if user is already signed in
+  const unsubscribe = firebase.auth().onAuthStateChanged(function(user) {
+    unsubscribe();
+    if (user) {
+      console.log(user);
+      // Logged in
+      store.dispatch(userSignInSuccess(user.uid));
+    } else {
+      console.log("No User");
+    }
+  });
+};
