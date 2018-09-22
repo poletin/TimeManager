@@ -1,6 +1,6 @@
 import firebase from "firebase";
 import store from "../store";
-import { userSignInSuccess } from "../actions";
+import { userSignInSuccess, userSignOutSuccess } from "../actions";
 // Initialize Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyCZuPXiYld1BIFprp_LVSbNZKCpYXRUJGg",
@@ -31,7 +31,7 @@ export const checkLoggedIn = function() {
       // Logged in
       store.dispatch(userSignInSuccess(user.uid));
     } else {
-      console.log("No User");
+      store.dispatch(userSignOutSuccess());
     }
   });
 };

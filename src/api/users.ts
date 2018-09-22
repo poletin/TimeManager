@@ -18,10 +18,14 @@ export function signInAnonym() {
     ) => {
       firebase
         .auth()
-        .signInAnonymously()
-        .catch(error => {
-          reject(error);
-        });
+        .setPersistence(firebase.auth.Auth.Persistence.LOCAL) //Keep the user signed in
+        .then(() => {
+          firebase
+            .auth()
+            .signInAnonymously()
+            .catch(reject);
+        })
+        .catch(reject);
 
       const unsubscribe = firebase.auth().onAuthStateChanged(user => {
         unsubscribe();
@@ -40,7 +44,6 @@ export function signOut() {
   var promise = new Promise(
     (resolve: () => void, reject: (error: Object) => void) => {
       firebase.auth().signOut();
-
       const unsubscribe = firebase.auth().onAuthStateChanged(user => {
         unsubscribe();
         if (user) {

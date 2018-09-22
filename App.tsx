@@ -55,9 +55,9 @@ class LoginDeciderComponent extends Component<DeciderProps> {
   }
 }
 
-function mapStateToProps({ user: { loggedIn } }: StoreState) {
+function mapStateToProps({ auth: { state } }: StoreState) {
   return {
-    loggedIn
+    loggedIn: state === "logged in"
   };
 }
 
