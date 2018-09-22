@@ -3,12 +3,15 @@ import "firebase/firestore";
 import { UserState } from "../reducers/user";
 
 // Initialize Cloud Firestore through Firebase
-const db = firebase.firestore();
+function getDB(){
+  const db = firebase.firestore();
 
-// Disable deprecated features
-db.settings({
-  timestampsInSnapshots: true
-});
+  // Disable deprecated features
+  db.settings({
+    timestampsInSnapshots: true
+  });
+  return db
+}
 
 export function signInAnonym() {
   var promise = new Promise(
@@ -61,7 +64,7 @@ export function fetchUserData() {
   const uid = getUid();
 
   return new Promise((resolve, reject) => {
-    const docRef = db.collection("users").doc(uid);
+    const docRef = getDB().collection("users").doc(uid);
     docRef
       .get()
       .then(doc => {
@@ -87,6 +90,7 @@ function getUid() {
 }
 
 export function generateTestData(uid: string) {
+  const db = getDB();
   const genUser = db
     .collection("users")
     .doc(uid)
@@ -120,7 +124,7 @@ export function generateTestData(uid: string) {
 
 export function saveUserSettings(user: UserState) {
   const uid = getUid();
-  return db
+  return getDB()
     .collection("users")
     .doc(uid)
     .set({ name: user.name }, { merge: true });

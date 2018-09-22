@@ -13,8 +13,10 @@ const firebaseConfig = {
 
 export const FirebaseApp = getApp();
 
+getApp();
+
 function getApp() {
-  return firebase.apps.length
+  return firebase.apps.length && firebase.apps[0]
     ? firebase.apps[0]
     : firebase.initializeApp(firebaseConfig);
 }
