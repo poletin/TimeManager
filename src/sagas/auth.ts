@@ -8,10 +8,11 @@ import {
 } from "../actions";
 import { call, put, takeLatest } from "redux-saga/effects";
 import { signInAnonym, signOut, generateTestData } from "../api";
+import { RNFirebase } from "react-native-firebase";
 
 function* _signInAnon(action: UserAction) {
   try {
-    const user: firebase.User = yield call(signInAnonym);
+    const user: RNFirebase.User = yield call(signInAnonym);
     yield call(generateTestData, user.uid);
     yield put(userSignInSuccess(user.uid));
   } catch (error) {

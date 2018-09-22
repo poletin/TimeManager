@@ -4253,6 +4253,10 @@ onetime@^2.0.0:
   dependencies:
     mimic-fn "^1.0.0"
 
+opencollective-postinstall@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/opencollective-postinstall/-/opencollective-postinstall-2.0.0.tgz#5fe062f2706bb84150f7fb1af9f1277e46ec1388"
+
 opn@^3.0.2:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/opn/-/opn-3.0.3.tgz#b6d99e7399f78d65c3baaffef1fb288e9b85243a"
@@ -4657,6 +4661,13 @@ react-native-easy-grid@0.2.0:
   resolved "https://registry.yarnpkg.com/react-native-easy-grid/-/react-native-easy-grid-0.2.0.tgz#4718031aa1baaa2613b829fc807da288eb0d2797"
   dependencies:
     lodash "^4.11.1"
+
+react-native-firebase@^5.0.0-rc4:
+  version "5.0.0-rc4"
+  resolved "https://registry.yarnpkg.com/react-native-firebase/-/react-native-firebase-5.0.0-rc4.tgz#19e3e966fcaec82673113741e58c93e8c58f976e"
+  dependencies:
+    opencollective-postinstall "^2.0.0"
+    prop-types "^15.6.2"
 
 react-native-iphone-x-helper@^1.0.1:
   version "1.1.0"

@@ -103,6 +103,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true  // needed for firestore:
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -137,6 +138,13 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-firebase')
+    // Firebase dependencies
+    implementation "com.google.android.gms:play-services-base:15.0.1"
+    implementation "com.google.firebase:firebase-core:16.0.1"
+    implementation "com.google.firebase:firebase-auth:16.0.2"
+    implementation "com.google.firebase:firebase-firestore:17.0.2"
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.facebook.react:react-native:+"  // From node_modules
@@ -148,3 +156,6 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
+
+apply plugin: 'com.google.gms.google-services'
+com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true

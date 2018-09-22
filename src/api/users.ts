@@ -1,53 +1,23 @@
-import firebase from "firebase";
 import "firebase/firestore";
 import { UserState } from "../reducers/user";
-
-// Initialize Cloud Firestore through Firebase
-function getDB(){
-  const db = firebase.firestore();
-
-  // Disable deprecated features
-  db.settings({
-    timestampsInSnapshots: true
-  });
-  return db
-}
+import firebase, { RNFirebase } from "react-native-firebase";
 
 export function signInAnonym() {
-  var promise = new Promise(
-    (
-      resolve: (user: firebase.User) => void,
-      reject: (error: Object) => void
-    ) => {
-      firebase
-        .auth()
-        .setPersistence(firebase.auth.Auth.Persistence.LOCAL) //Keep the user signed in
-        .then(() => {
-          firebase
-            .auth()
-            .signInAnonymously()
-            .catch(reject);
-        })
-        .catch(reject);
-
-      const unsubscribe = firebase.auth().onAuthStateChanged(user => {
-        unsubscribe();
-        if (user) {
-          resolve(user);
-        } else {
-          reject({ error: "No User" });
-        }
-      });
-    }
-  );
-  return promise;
+  return firebase
+    .auth()
+    .signInAnonymouslyAndRetrieveData()
+    .then(credential => {
+      if (credential) {
+        return credential.user;
+      }
+    });
 }
 
 export function signOut() {
   var promise = new Promise(
     (resolve: () => void, reject: (error: Object) => void) => {
       firebase.auth().signOut();
-      const unsubscribe = firebase.auth().onAuthStateChanged(user => {
+      const unsubscribe = firebase.auth().onAuthStateChanged((user: RNFirebase.User|null) => {
         unsubscribe();
         if (user) {
           reject(user);
@@ -63,20 +33,17 @@ export function signOut() {
 export function fetchUserData() {
   const uid = getUid();
 
-  return new Promise((resolve, reject) => {
-    const docRef = getDB().collection("users").doc(uid);
-    docRef
-      .get()
-      .then(doc => {
-        if (doc.exists) {
-          resolve(doc.data());
-        } else {
-          reject("Document does not Exist");
-        }
-      })
-      .catch(function(error) {
-        reject(error);
-      });
+  return new Promise((resolve:(x:object|void)=>void, reject) => {
+    const userDoc = firebase
+    .firestore()
+    .collection("users")
+    .doc(uid);
+    userDoc.get().then(doc => {
+          if (doc.exists) {
+            resolve(doc.data());
+          } else {
+            reject("Document does not Exist");
+          }} );
   });
 }
 
@@ -90,42 +57,29 @@ function getUid() {
 }
 
 export function generateTestData(uid: string) {
-  const db = getDB();
-  const genUser = db
+  const userDoc = firebase
+    .firestore()
     .collection("users")
-    .doc(uid)
-    .set({ name: "Dummy" });
-  const genWork = genUser.then(() => {
-    return db
-      .collection("users")
-      .doc(uid)
-      .collection("categories")
-      .doc("work")
-      .set({
-        total: 21,
-        weeklyTarget: 42
-      });
-  });
-  const genTime = genWork.then(() => {
-    return db
-      .collection("users")
-      .doc(uid)
-      .collection("categories")
-      .doc("work")
-      .collection("times")
-      .doc(new Date().toUTCString())
-      .set({
-        hours: 2
-      });
-  });
+    .doc(uid);
+  const workDoc = userDoc.collection("categories").doc("work");
+  const timeDoc = workDoc.collection("times").doc(new Date().toUTCString());
 
-  return genTime;
+  const updateFunction = async (
+    transaction: RNFirebase.firestore.Transaction
+  ) => {
+    transaction.set(userDoc, { name: "New Name" });
+    transaction.set(workDoc, { total: 21, weeklyTarget: 42 });
+    transaction.set(timeDoc, { hours: 2 });
+  };
+
+  // run the transaction
+  return firebase.firestore().runTransaction(updateFunction);
 }
 
 export function saveUserSettings(user: UserState) {
   const uid = getUid();
-  return getDB()
-    .collection("users")
-    .doc(uid)
-    .set({ name: user.name }, { merge: true });
+  return firebase
+  .firestore()
+  .collection("users")
+  .doc(uid).set({ name: user.name }, { merge: true });
 }
