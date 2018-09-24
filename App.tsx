@@ -14,6 +14,7 @@ import LoginScreen from "./src/screens/LoginScreen";
 import { StoreState } from "./src/reducers";
 import UserSettingsScreen from "./src/screens/UserSettingsScreen";
 import { checkLoggedIn } from "./src/api";
+import SplashScreen from "./src/screens/SplashScreen";
 
 const MyApp = createDrawerNavigator({
   Home: {
@@ -39,7 +40,7 @@ export default class App extends Component<Props> {
 }
 
 type DeciderProps = {
-  loggedIn: boolean;
+  status: auth.Status;
 };
 
 class LoginDeciderComponent extends Component<DeciderProps> {
@@ -48,16 +49,23 @@ class LoginDeciderComponent extends Component<DeciderProps> {
   }
 
   render() {
-    if (this.props.loggedIn) {
-      return <MyApp />;
+    switch (this.props.status) {
+      case "checking":
+        return <SplashScreen />;
+      case "logged in":
+      case "logging out":
+        return <MyApp />;
+      case "logged out":
+      case "logging in":
+        return <LoginScreen />;
     }
     return <LoginScreen />;
   }
 }
 
-function mapStateToProps({ auth: { state } }: StoreState) {
+function mapStateToProps({ auth: { status } }: StoreState) {
   return {
-    loggedIn: state === "logged in"
+    status
   };
 }
 

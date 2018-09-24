@@ -8,12 +8,12 @@ import {
 } from "../actions";
 
 export interface AuthState {
-  state: auth.Status;
+  status: auth.Status;
   busy: boolean;
 }
 
 const defaultValue: AuthState = {
-  state: "checking",
+  status: "checking",
   busy: true
 };
 
@@ -23,14 +23,14 @@ export default function auth(
 ): AuthState {
   switch (action.type) {
     case USER_SIGNIN_ANON:
-      return { ...state, state: "logging in", busy: true };
+      return { ...state, status: "logging in", busy: true };
     case USER_SIGNIN_SUCCESS:
-      return { ...state, state: "logged in", busy: false };
+      return { ...state, status: "logged in", busy: false };
     case USER_SIGNOUT:
-      return { ...state, state: "logging out", busy: true };
+      return { ...state, status: "logging out", busy: true };
     case USER_SIGNOUT_SUCCESS:
     case USER_SIGNIN_FAILED:
-      return { ...state, state: "logged out", busy: false };
+      return { ...state, status: "logged out", busy: false };
     default:
       return state;
   }
