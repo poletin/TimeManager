@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { StatusBar } from "react-native";
 import {
   Container,
   Header,
@@ -9,15 +8,10 @@ import {
   Right,
   Button,
   Body,
-  Content,
-  Text,
-  Card,
-  CardItem
+  Content
 } from "native-base";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import store from "../store";
-import { userSignOut, userSignOutSuccess } from "../actions";
-
+import Categories from "../container/categories/Categories";
 type HomeProps = {
   navigation: NavigationScreenProp<NavigationState>;
 };
@@ -45,30 +39,7 @@ export default class HomeScreen extends Component<HomeProps> {
           <Right />
         </Header>
         <Content padder>
-          <Card>
-            <CardItem>
-              <Body>
-                <Text>Navigation Example</Text>
-              </Body>
-            </CardItem>
-          </Card>
-          <Button
-            full
-            rounded
-            dark
-            style={{ marginTop: 10 }}
-            onPress={() => this.props.navigation.navigate("Notifications")}
-          >
-            <Text>Notifications</Text>
-          </Button>
-          <Button
-            onPress={() => {
-              // Just a hack!!!
-              store.dispatch(userSignOut());
-            }}
-          >
-            <Text>Logout</Text>
-          </Button>
+          <Categories />
         </Content>
       </Container>
     );

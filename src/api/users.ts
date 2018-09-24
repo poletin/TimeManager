@@ -17,14 +17,16 @@ export function signOut() {
   var promise = new Promise(
     (resolve: () => void, reject: (error: Object) => void) => {
       firebase.auth().signOut();
-      const unsubscribe = firebase.auth().onAuthStateChanged((user: RNFirebase.User|null) => {
-        unsubscribe();
-        if (user) {
-          reject(user);
-        } else {
-          resolve();
-        }
-      });
+      const unsubscribe = firebase
+        .auth()
+        .onAuthStateChanged((user: RNFirebase.User | null) => {
+          unsubscribe();
+          if (user) {
+            reject(user);
+          } else {
+            resolve();
+          }
+        });
     }
   );
   return promise;
@@ -33,21 +35,22 @@ export function signOut() {
 export function fetchUserData() {
   const uid = getUid();
 
-  return new Promise((resolve:(x:object|void)=>void, reject) => {
+  return new Promise((resolve: (x: object | void) => void, reject) => {
     const userDoc = firebase
-    .firestore()
-    .collection("users")
-    .doc(uid);
+      .firestore()
+      .collection("users")
+      .doc(uid);
     userDoc.get().then(doc => {
-          if (doc.exists) {
-            resolve(doc.data());
-          } else {
-            reject("Document does not Exist");
-          }} );
+      if (doc.exists) {
+        resolve(doc.data());
+      } else {
+        reject("Document does not Exist");
+      }
+    });
   });
 }
 
-function getUid() {
+export function getUid() {
   const currentUser = firebase.auth().currentUser;
   if (!currentUser) {
     throw "Must be logged in";
@@ -79,7 +82,8 @@ export function generateTestData(uid: string) {
 export function saveUserSettings(user: UserState) {
   const uid = getUid();
   return firebase
-  .firestore()
-  .collection("users")
-  .doc(uid).set({ name: user.name }, { merge: true });
+    .firestore()
+    .collection("users")
+    .doc(uid)
+    .set({ name: user.name }, { merge: true });
 }
