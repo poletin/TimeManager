@@ -15,18 +15,24 @@ import { StoreState } from "./src/reducers";
 import UserSettingsScreen from "./src/screens/UserSettingsScreen";
 import { checkLoggedIn } from "./src/api";
 import SplashScreen from "./src/screens/SplashScreen";
+import Sidebar from "./src/components/sidebar/Sidebar";
 
-const MyApp = createDrawerNavigator({
-  Home: {
-    screen: HomeScreen
+const MyApp = createDrawerNavigator(
+  {
+    Home: {
+      screen: HomeScreen
+    },
+    Notifications: {
+      screen: NotificationsScreen
+    },
+    Settings: {
+      screen: UserSettingsScreen
+    }
   },
-  Notifications: {
-    screen: NotificationsScreen
-  },
-  Settings: {
-    screen: UserSettingsScreen
+  {
+    contentComponent: Sidebar
   }
-});
+);
 
 type Props = {};
 export default class App extends Component<Props> {

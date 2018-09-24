@@ -12,7 +12,6 @@ export const checkLoggedIn = function() {
     .onAuthStateChanged(function(user: RNFirebase.User | null) {
       unsubscribe();
       if (user) {
-        console.log(user);
         // Logged in
         store.dispatch(userSignInSuccess(user.uid));
       } else {
