@@ -7,15 +7,8 @@ import {
   USER_SIGNIN_FAILED
 } from "../actions";
 
-export type AuthStateOption =
-  | "checking"
-  | "logging in"
-  | "logging out"
-  | "logged in"
-  | "logged out";
-
 export interface AuthState {
-  state: AuthStateOption;
+  state: auth.Status;
   busy: boolean;
 }
 
