@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "371301877277",
+    "firebase_url": "https://timemanager-372a6.firebaseio.com",
+    "project_id": "timemanager-372a6",
+    "storage_bucket": "timemanager-372a6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:371301877277:android:6f31c02c60a2e649",
+        "android_client_info": {
+          "package_name": "com.timemanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "371301877277-hnp1nppek885r1vnesnknne1uk0gmgbo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgBAm1vPQe0de5vRPnY4a9Mkx2XDtO2P8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
