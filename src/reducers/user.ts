@@ -3,6 +3,7 @@ import {
   FETCH_USER_DATA_SUCCESS,
   USER_SETTING_CHANGED
 } from "../actions";
+import { RNFirebase } from "react-native-firebase";
 
 export interface UserState {
   name: string;

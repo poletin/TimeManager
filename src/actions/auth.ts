@@ -1,3 +1,5 @@
+import { RNFirebase } from "react-native-firebase";
+
 export const USER_SIGNIN_ANON = "USER_SIGNIN_ANON";
 export type USER_SIGNIN_ANON = typeof USER_SIGNIN_ANON;
 export interface UserSignInAnon {
@@ -13,12 +15,12 @@ export const USER_SIGNIN_SUCCESS = "USER_SIGNIN_SUCCESS";
 export type USER_SIGNIN_SUCCESS = typeof USER_SIGNIN_SUCCESS;
 export interface UserSignInSuccess {
   type: USER_SIGNIN_SUCCESS;
-  uid: string;
+  user: RNFirebase.User;
 }
-export function userSignInSuccess(uid: string): UserSignInSuccess {
+export function userSignInSuccess(user: RNFirebase.User): UserSignInSuccess {
   return {
     type: USER_SIGNIN_SUCCESS,
-    uid: uid
+    user: user
   };
 }
 

@@ -6,13 +6,16 @@ import {
   AuthAction,
   USER_SIGNIN_FAILED
 } from "../actions";
+import { RNFirebase } from "react-native-firebase";
 
 export interface AuthState {
+  firebaseUser: RNFirebase.User | null;
   status: auth.Status;
   busy: boolean;
 }
 
 const defaultValue: AuthState = {
+  firebaseUser: null,
   status: "checking",
   busy: true
 };

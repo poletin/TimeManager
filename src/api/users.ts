@@ -16,7 +16,25 @@ export function signInAnonym() {
 }
 
 export function signOut() {
+  const user = firebase.auth().currentUser;
+  let run: () => Promise<any>;
+  if (user && user.isAnonymous) {
+    return (async function() {
+      await deleteData();
+      await user.delete();
+      return;
+    })();
+  }
   return firebase.auth().signOut();
+}
+
+function deleteData() {
+  const uid = getUid();
+  return firebase
+    .firestore()
+    .collection("users")
+    .doc(uid)
+    .delete();
 }
 
 export function fetchUserData() {
@@ -55,6 +73,8 @@ export function generateTestData(uid: string) {
     await timeDoc.set({ hours: 2 });
     return;
   };
+
+
 
   return genData();
 }

@@ -14,7 +14,7 @@ function* _signInAnon(action: UserAction) {
   try {
     const user: RNFirebase.User = yield call(signInAnonym);
     yield call(generateTestData, user.uid);
-    yield put(userSignInSuccess(user.uid));
+    yield put(userSignInSuccess(user));
   } catch (error) {
     console.error(error);
     yield put(userSignInFailed());
