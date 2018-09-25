@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, Platform, StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import {
   Content,
   Text,
@@ -13,6 +13,7 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import HorizontalLine from "../commons/HorizontalLine";
 import { userSignOut } from "../../actions";
 import store from "../../store";
+import Logo from "../commons/Logo";
 
 const pages = [
   {
@@ -42,11 +43,7 @@ export default class SideBar extends Component<Props> {
     return (
       <Container>
         <Content style={{ flex: 1, backgroundColor: "#fff", top: -1 }}>
-          <Image
-            resizeMode="contain"
-            source={require("../../assets/logo.png")}
-            style={[styles.drawerCover]}
-          />
+          <Logo />
           <HorizontalLine />
           <List
             style={{ flex: 1 }}
@@ -128,12 +125,6 @@ export default class SideBar extends Component<Props> {
 }
 
 const styles = StyleSheet.create({
-  drawerCover: {
-    width: undefined,
-    height: 150,
-    marginBottom: 10,
-    marginTop: 10
-  },
   text: {
     fontWeight: Platform.OS === "ios" ? "500" : "400",
     fontSize: 16,

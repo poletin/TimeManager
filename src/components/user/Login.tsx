@@ -3,6 +3,7 @@ import { Text, Button, View, Spinner, Container } from "native-base";
 import { StyleSheet, Modal } from "react-native";
 import LoginForm from "./LoginForm";
 import BusyOverlay from "../commons/BusyOverlay";
+import Logo from "../commons/Logo";
 
 type LoginProps = {
   onLoginAnon: () => {};
@@ -13,6 +14,7 @@ export default class Login extends Component<LoginProps> {
   render() {
     return (
       <View style={styles.all}>
+        <Logo height={250} />
         <LoginForm
           onSubmit={data => {
             this.props.onSignIn(data);
