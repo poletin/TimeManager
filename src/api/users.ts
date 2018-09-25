@@ -15,9 +15,32 @@ export function signInAnonym() {
     });
 }
 
+export function signInEmail(credentials: auth.LoginFormData) {
+  return firebase
+    .auth()
+    .signInAndRetrieveDataWithEmailAndPassword(
+      credentials.email,
+      credentials.pwd
+    )
+    .then(credentials => {
+      return credentials.user;
+    });
+}
+
+export function signUpEmail(credentials: auth.LoginFormData) {
+  return firebase
+    .auth()
+    .createUserAndRetrieveDataWithEmailAndPassword(
+      credentials.email,
+      credentials.pwd
+    )
+    .then(credentials => {
+      return credentials.user;
+    });
+}
+
 export function signOut() {
   const user = firebase.auth().currentUser;
-  let run: () => Promise<any>;
   if (user && user.isAnonymous) {
     return (async function() {
       await deleteData();
@@ -73,8 +96,6 @@ export function generateTestData(uid: string) {
     await timeDoc.set({ hours: 2 });
     return;
   };
-
-
 
   return genData();
 }

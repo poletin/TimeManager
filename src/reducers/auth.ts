@@ -4,7 +4,8 @@ import {
   USER_SIGNIN_ANON,
   USER_SIGNOUT_SUCCESS,
   AuthAction,
-  USER_SIGNIN_FAILED
+  USER_SIGNIN_FAILED,
+  USER_SIGNIN_EMAIL
 } from "../actions";
 import { RNFirebase } from "react-native-firebase";
 
@@ -26,6 +27,7 @@ export default function auth(
 ): AuthState {
   switch (action.type) {
     case USER_SIGNIN_ANON:
+    case USER_SIGNIN_EMAIL:
       return { ...state, status: "logging in", busy: true };
     case USER_SIGNIN_SUCCESS:
       return { ...state, status: "logged in", busy: false };

@@ -12,7 +12,9 @@ function mapStateToProps({ auth: { busy } }: StoreState) {
 
 function mapDispatchToProps(dispatch: Dispatch<actions.AuthAction>) {
   return {
-    onLoginAnon: () => dispatch(actions.userSignInAnon())
+    onLoginAnon: () => dispatch(actions.userSignInAnon()),
+    onSignIn: (data: auth.LoginFormData) =>
+      dispatch(actions.userSignInEmail(data))
   };
 }
 
