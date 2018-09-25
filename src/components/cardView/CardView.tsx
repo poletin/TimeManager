@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardItem, Text, View, Icon } from "native-base";
+import { Card, CardItem, Text, View, Icon, Button } from "native-base";
 import { SingleCategory } from "../../reducers/category";
 
 type CategoryProps = {
@@ -27,9 +27,15 @@ export default (props: CategoryProps) => {
         </View>
       </CardItem>
       <CardItem footer style={{ justifyContent: "flex-end" }}>
-        <Icon name="pie" />
-        <Icon name="play" />
-        <Icon name="settings" />
+        <Button transparent dark>
+          <Icon name="pie" />
+        </Button>
+        <Button transparent dark>
+          <Icon name="play" />
+        </Button>
+        <Button transparent dark>
+          <Icon name="settings" />
+        </Button>
       </CardItem>
     </Card>
   );
