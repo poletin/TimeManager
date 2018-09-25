@@ -1,9 +1,8 @@
 import React from "react";
 import { Card, CardItem, Text, View, Icon, Button } from "native-base";
-import { SingleCategory } from "../../reducers/category";
 
 type CategoryProps = {
-  category: SingleCategory;
+  category: categories.Single;
 };
 export default (props: CategoryProps) => {
   return (

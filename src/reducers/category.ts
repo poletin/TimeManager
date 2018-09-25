@@ -1,13 +1,8 @@
 import { CategoryAction, FETCH_CATEGORY_DATA_SUCCESS } from "../actions";
 import firebase, { RNFirebase } from "react-native-firebase";
 
-export interface SingleCategory {
-  name: string;
-  total: number;
-}
-
 export interface CategoryState {
-  categories: SingleCategory[];
+  categories: categories.Single[];
 }
 
 const defaultValue: CategoryState = {
@@ -20,10 +15,12 @@ export default function category(
 ): CategoryState {
   switch (action.type) {
     case FETCH_CATEGORY_DATA_SUCCESS:
-      const categories: SingleCategory[] = action.categoryData.map(category => {
-        const data = category.data() as { total: number };
-        return { name: category.id || "", total: data.total };
-      });
+      const categories: categories.Single[] = action.categoryData.map(
+        category => {
+          const data = category.data() as { total: number };
+          return { name: category.id || "", total: data.total };
+        }
+      );
 
       return {
         ...state,

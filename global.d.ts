@@ -11,3 +11,10 @@ declare namespace auth {
     pressedButton?: "signIn" | "signUp";
   }
 }
+
+declare namespace categories {
+  export interface Single {
+    name: string;
+    total: number;
+  }
+}

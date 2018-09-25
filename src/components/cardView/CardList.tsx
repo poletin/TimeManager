@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { View } from "native-base";
 import CardView from "./CardView";
-import { SingleCategory } from "../../reducers/category";
 import Categories from "../../container/categories/Categories";
 type Props = {
-  categories: SingleCategory[];
+  categories: categories.Single[];
 };
 
 export default class CardList extends Component<Props> {
