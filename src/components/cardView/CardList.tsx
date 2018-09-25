@@ -4,6 +4,8 @@ import CardView from "./CardView";
 import Categories from "../../container/categories/Categories";
 type Props = {
   categories: categories.Single[];
+  onCategoryStart: (id: string) => void;
+  onCategoryPause: (id: string) => void;
 };
 
 export default class CardList extends Component<Props> {
@@ -13,7 +15,12 @@ export default class CardList extends Component<Props> {
 
   renderContent() {
     return this.props.categories.map(singleCategory => (
-      <CardView category={singleCategory} key={singleCategory.name} />
+      <CardView
+        category={singleCategory}
+        key={singleCategory.name}
+        onStart={this.props.onCategoryStart}
+        onPause={this.props.onCategoryPause}
+      />
     ));
   }
 }

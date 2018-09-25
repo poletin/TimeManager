@@ -15,4 +15,33 @@ export function fetchCategorySuccess(
   };
 }
 
-export type CategoryAction = FetchCategorySuccess;
+export const CATEGORY_START_RECORDING = "CATEGORY_START_RECORDING";
+export type CATEGORY_START_RECORDING = typeof CATEGORY_START_RECORDING;
+export interface CategoryStartRecording {
+  type: CATEGORY_START_RECORDING;
+  categoryId: string;
+}
+export function categoryStartRecording(id: string): CategoryStartRecording {
+  return {
+    type: CATEGORY_START_RECORDING,
+    categoryId: id
+  };
+}
+
+export const CATEGORY_PAUSE_RECORDING = "CATEGORY_PAUSE_RECORDING";
+export type CATEGORY_PAUSE_RECORDING = typeof CATEGORY_PAUSE_RECORDING;
+export interface CategoryPauseRecording {
+  type: CATEGORY_PAUSE_RECORDING;
+  categoryId: string;
+}
+export function categoryPauseRecording(id: string): CategoryPauseRecording {
+  return {
+    type: CATEGORY_PAUSE_RECORDING,
+    categoryId: id
+  };
+}
+
+export type CategoryAction =
+  | FetchCategorySuccess
+  | CategoryStartRecording
+  | CategoryPauseRecording;

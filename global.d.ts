@@ -16,5 +16,7 @@ declare namespace categories {
   export interface Single {
     name: string;
     total: number;
+    currentRecording: null | any; //technically RNFirebase.firestore.FieldValue but this requires import and refactoring;
+    recordingRunning: boolean;
   }
 }
