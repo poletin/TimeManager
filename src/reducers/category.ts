@@ -2,15 +2,19 @@ import {
   CategoryAction,
   FETCH_CATEGORY_DATA_SUCCESS,
   CATEGORY_START_RECORDING,
-  CATEGORY_PAUSE_RECORDING
+  CATEGORY_PAUSE_RECORDING,
+  CATEGORY_RECORDINGS_SENT
 } from "../actions";
+import moment from "moment";
 
 export interface CategoryState {
   categories: { [key: string]: categories.Single };
+  unsentRecordings: categories.Recording[];
 }
 
 const defaultValue: CategoryState = {
-  categories: {}
+  categories: {},
+  unsentRecordings: []
 };
 
 export default function category(
@@ -25,8 +29,10 @@ export default function category(
           categoryMap[category.id || "none"] = {
             name: data.name || category.id || "",
             total: data.total,
-            currentRecording: data.currentRecording,
-            recordingRunning: data.recordingRunning
+            recordingData: data.recordingData || {
+              started: null,
+              recordingRunning: false
+            }
           };
           return categoryMap;
         },
@@ -38,10 +44,12 @@ export default function category(
         categories: categories
       };
     case CATEGORY_START_RECORDING:
-      const updatedCategory = {
+      const updatedCategory: categories.Single = {
         ...state.categories[action.categoryId],
-        recordingRunning: true,
-        currentRecording: new Date()
+        recordingData: {
+          recordingRunning: true,
+          started: new Date()
+        }
       };
       return {
         ...state,
@@ -51,19 +59,42 @@ export default function category(
         }
       };
     case CATEGORY_PAUSE_RECORDING:
-      const updatedCategory2 = {
+      const startTime = moment(
+        state.categories[action.categoryId].recordingData.started!
+      );
+      const currentTime = new Date();
+      const stopTime = moment(currentTime);
+      const duration = moment.duration(stopTime.diff(startTime));
+      const minutes = duration.asMinutes();
+      const updatedCategory2: categories.Single = {
         ...state.categories[action.categoryId],
-        recordingRunning: false,
-        currentRecording: null
+        recordingData: {
+          recordingRunning: false,
+          started: null
+        },
+        total: state.categories[action.categoryId].total + minutes
       };
       return {
         ...state,
         categories: {
           ...state.categories,
           [action.categoryId]: updatedCategory2
-        }
+        },
+        unsentRecordings: [
+          ...state.unsentRecordings,
+          {
+            categoryId: action.categoryId,
+            minutes: minutes,
+            started: state.categories[action.categoryId].recordingData.started!,
+            stopped: currentTime
+          }
+        ]
       };
-
+    case CATEGORY_RECORDINGS_SENT:
+      return {
+        ...state,
+        unsentRecordings: []
+      };
     default:
       return state;
   }

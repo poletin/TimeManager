@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { Card, CardItem, Text, View, Icon, Button } from "native-base";
 import category from "../../reducers/category";
+import Timer from "./Timer";
+import moment from "moment";
+import { formatMinutes } from "../../utile/TimeFormat";
 
 type Props = {
   category: categories.Single;
@@ -15,7 +18,6 @@ export default class CardView extends Component<Props> {
         <CardItem header>
           <Text style={{}}>{this.props.category.name}</Text>
         </CardItem>
-        <View />
         <CardItem style={{ backgroundColor: "lightgrey" }}>
           <Text>Bereits gearbeitet</Text>
         </CardItem>
@@ -23,8 +25,8 @@ export default class CardView extends Component<Props> {
     );
   }
   renderMainContent() {
-    return (
-      <View>
+    if (this.props.category.recordingData.recordingRunning) {
+      return (
         <CardItem style={{ backgroundColor: "lightgrey", height: 100 }}>
           <View
             style={{
@@ -33,11 +35,30 @@ export default class CardView extends Component<Props> {
               alignItems: "center"
             }}
           >
-            <Text style={{ fontSize: 50 }}> {this.props.category.total}</Text>
+            <Timer
+              style={{ fontSize: 50 }}
+              startTime={this.props.category.recordingData.started!}
+            />
           </View>
         </CardItem>
-      </View>
-    );
+      );
+    } else {
+      return (
+        <CardItem style={{ backgroundColor: "lightgrey", height: 100 }}>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
+            <Text style={{ fontSize: 50 }}>
+              {formatMinutes(this.props.category.total)}
+            </Text>
+          </View>
+        </CardItem>
+      );
+    }
   }
   renderButtons() {
     return (
@@ -55,7 +76,7 @@ export default class CardView extends Component<Props> {
     );
   }
   renderRecordingButton() {
-    if (this.props.category.recordingRunning) {
+    if (this.props.category.recordingData.recordingRunning) {
       return (
         <Button
           transparent

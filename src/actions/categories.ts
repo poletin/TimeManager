@@ -41,7 +41,19 @@ export function categoryPauseRecording(id: string): CategoryPauseRecording {
   };
 }
 
+export const CATEGORY_RECORDINGS_SENT = "CATEGORY_RECORDINGS_SENT";
+export type CATEGORY_RECORDINGS_SENT = typeof CATEGORY_RECORDINGS_SENT;
+export interface CategoryRecordingsSent {
+  type: CATEGORY_RECORDINGS_SENT;
+}
+export function categoryRecordingsSent(): CategoryRecordingsSent {
+  return {
+    type: CATEGORY_RECORDINGS_SENT
+  };
+}
+
 export type CategoryAction =
   | FetchCategorySuccess
   | CategoryStartRecording
-  | CategoryPauseRecording;
+  | CategoryPauseRecording
+  | CategoryRecordingsSent;

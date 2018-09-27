@@ -18,3 +18,36 @@ export function fetchCategoryData() {
       .catch(reject);
   });
 }
+
+export function updateCategory(id: string, category: categories.Single) {
+  const uid = getUid();
+  return firebase
+    .firestore()
+    .collection("users")
+    .doc(uid)
+    .collection("categories")
+    .doc(id)
+    .set(category);
+}
+
+export function uploadTimeRecordings(recordings: categories.Recording[]) {
+  const uid = getUid();
+  const categories = firebase
+    .firestore()
+    .collection("users")
+    .doc(uid)
+    .collection("categories");
+
+  const promises = recordings.map(recording => {
+    return categories
+      .doc(recording.categoryId)
+      .collection("times")
+      .doc(recording.started.toISOString())
+      .set({
+        started: recording.started,
+        stopped: recording.stopped,
+        minutes: recording.minutes
+      });
+  });
+  return Promise.all(promises);
+}

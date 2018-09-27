@@ -83,20 +83,25 @@ export function getUid() {
 }
 
 export function generateTestData(uid: string) {
+  const currentTime = new Date();
+  const startedTime = new Date(currentTime.getMilliseconds() - 3600000);
   const userDoc = firebase
     .firestore()
     .collection("users")
     .doc(uid);
   const workDoc = userDoc.collection("categories").doc("work");
-  const timeDoc = workDoc.collection("times").doc(new Date().toUTCString());
+  const timeDoc = workDoc.collection("times").doc(startedTime.toISOString());
 
   const genData = async function() {
     await userDoc.set({ name: "New Name" });
     await workDoc.set({ total: 21, weeklyTarget: 42 });
-    await timeDoc.set({ hours: 2 });
+    await timeDoc.set({
+      minutes: 60,
+      started: startedTime,
+      stopped: currentTime
+    });
     return;
   };
-
   return genData();
 }
 
