@@ -6,12 +6,12 @@ import {
   View,
   Icon,
   Button,
-  Right,
+  Left,
   Body,
-  Left
+  Right
 } from "native-base";
 import Timer from "./Timer";
-import { formatMinutes } from "../../utils/TimeFunctions";
+import { formatMinutes, formatDate } from "../../utils/TimeFunctions";
 
 type Props = {
   category: categories.Single;
@@ -23,14 +23,32 @@ type Props = {
   id: string;
 };
 export default class CardView extends Component<Props> {
+  getSubtitle() {
+    if (this.props.category.isIntervall) {
+      if (this.props.category.recordingData.recordingRunning) {
+        return "Aktuelle Aufzeichnung";
+      } else {
+        return `Zeit seit ${this.props.category.lastUpdate}`;
+      }
+    } else {
+      if (this.props.category.recordingData.recordingRunning) {
+        return "Aktuelle Aufzeichnung";
+      } else {
+        return "Zeitkonto";
+      }
+    }
+  }
   renderTopRows() {
     return (
       <View>
         <CardItem header>
-          <Text style={{}}>{this.props.category.name}</Text>
-        </CardItem>
-        <CardItem style={{ backgroundColor: "lightgrey" }}>
-          <Text>Bereits gearbeitet</Text>
+          <Left>
+            {/* <Icon active name="briefcase" style={{ fontSize: 26, width: 30 }} /> */}
+            <Body>
+              <Text>{this.props.category.name}</Text>
+              <Text note>{this.getSubtitle()}</Text>
+            </Body>
+          </Left>
         </CardItem>
       </View>
     );
@@ -39,18 +57,28 @@ export default class CardView extends Component<Props> {
     if (this.props.category.recordingData.recordingRunning) {
       return (
         <CardItem style={{ backgroundColor: "lightgrey", height: 100 }}>
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center"
-            }}
-          >
+          <Left>
+            <View
+              style={{
+                flex: 1,
+                alignItems: "flex-start"
+              }}
+            >
+              <Timer
+                style={{ fontSize: 50 }}
+                startTime={this.props.category.recordingData.started!}
+                baseTime={this.props.category.total}
+              />
+              <Text>Insgesamt</Text>
+            </View>
+          </Left>
+          <Right>
             <Timer
               style={{ fontSize: 50 }}
               startTime={this.props.category.recordingData.started!}
             />
-          </View>
+            <Text>Aktuelle Zeit</Text>
+          </Right>
         </CardItem>
       );
     } else {

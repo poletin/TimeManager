@@ -5,16 +5,23 @@ import momentDurationFormatSetup from "moment-duration-format";
 momentDurationFormatSetup(moment);
 
 export const formatTimeSince = (startTime: Date) => {
-  let diff = moment.duration(moment().diff(startTime));
+  const diff = moment.duration(moment().diff(startTime));
   return diff.format("hh:*mm:ss");
 };
 
-export const formatMinutes = (minutes: number) => {
-  let diff = moment.duration(minutes, "minutes");
-  return diff.format("dd [Tage] *hh:mm");
+export const calculateDiff = (minutes: number, startTime: Date) => {
+  const duration = moment.duration(moment().diff(startTime)).asSeconds();
+  return minutes * 60 + duration;
+};
+
+export const formatMinutes = (minutes: number, startTime?: Date) => {
+  const diff = startTime ? calculateDiff(minutes, startTime) : minutes * 60;
+  let time = moment.duration(diff, "seconds");
+  return time.format("dd [Tage] *hh:mm:ss");
 };
 
 export const formatDate = (date: Date) => moment(date).format("DD.MM.YYYY");
+
 export const formatDateTime = (date: Date) =>
   moment(date).format("DD.MM.YYYY HH:mm");
 

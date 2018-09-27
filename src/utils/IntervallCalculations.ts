@@ -8,7 +8,7 @@ export function isInInterval(category: categories.Single, date: Date) {
   if (isContinuous(category)) {
     return true;
   }
-  return moment(category.lastUpdate).isSameOrBefore(date);
+  return moment(category.lastUpdate, "DD.MM.YYYY").isSameOrBefore(date);
 }
 
 export function calculateIntervalls(categories: categories.CategoryMap) {

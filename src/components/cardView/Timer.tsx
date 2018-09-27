@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { Text, NativeBase } from "native-base";
-import { formatTimeSince } from "../../utils/TimeFunctions";
+import { formatTimeSince, formatMinutes } from "../../utils/TimeFunctions";
 
 type Props = NativeBase.Text & {
   startTime: Date;
+  baseTime?: number;
 };
 type State = {
   timerId: number;
@@ -18,7 +19,7 @@ export default class Timer extends Component<Props, State> {
     };
   }
   componentDidMount() {
-    let timerId = setInterval(this.tick.bind(this), 1000);
+    const timerId = setInterval(this.tick.bind(this), 1000);
     this.setState({ timerId });
   }
   componentWillUnmount() {
@@ -30,6 +31,9 @@ export default class Timer extends Component<Props, State> {
     });
   }
   getString() {
+    if (this.props.baseTime || this.props.baseTime === 0) {
+      return formatMinutes(this.props.baseTime, this.props.startTime);
+    }
     return formatTimeSince(this.props.startTime);
   }
   render() {

@@ -60,8 +60,7 @@ function deleteData() {
     .delete();
 }
 
-export function fetchUserData() {
-  const uid = getUid();
+export function fetchUserData(uid = getUid()) {
   const userDoc = firebase
     .firestore()
     .collection("users")
