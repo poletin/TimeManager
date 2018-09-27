@@ -6,7 +6,6 @@ export function fetchCategoryData() {
   const uid = getUid();
 
   return new Promise((resolve: (x: object | void) => void, reject) => {
-    console.log(uid);
     firebase
       .firestore()
       .collection("users")

@@ -6,6 +6,7 @@ type Props = {
   category: categories.Single;
   onStart: (id: string) => void;
   onPause: (id: string) => void;
+  id: string;
 };
 export default class CardView extends Component<Props> {
   renderTopRows() {
@@ -60,7 +61,7 @@ export default class CardView extends Component<Props> {
           transparent
           dark
           onPress={() => {
-            this.props.onPause(this.props.category.name);
+            this.props.onPause(this.props.id);
           }}
         >
           <Icon name="pause" />
@@ -72,7 +73,7 @@ export default class CardView extends Component<Props> {
         transparent
         dark
         onPress={() => {
-          this.props.onStart(this.props.category.name);
+          this.props.onStart(this.props.id);
         }}
       >
         <Icon name="play" />
