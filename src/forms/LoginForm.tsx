@@ -8,6 +8,8 @@ import {
 } from "redux-form";
 import { Input, View, Item, Text, Label, Button } from "native-base";
 import { StyleSheet } from "react-native";
+import EmailInput from "./components/EmailInput";
+import PasswordInput from "./components/PasswordInput";
 
 type Props = InjectedFormProps<auth.LoginFormData, {}, string> & {
   onSubmit?: (data: auth.LoginFormData) => void;
@@ -17,8 +19,8 @@ class LoginForm extends Component<Props> {
   render() {
     return (
       <View style={styles.form}>
-        <Field name="email" label="E-Mail" component={this.renderInput} />
-        <Field name="pwd" label="Passwort" component={this.renderInput} />
+        <Field name="email" label="E-Mail" component={EmailInput} />
+        <Field name="pwd" label="Passwort" component={PasswordInput} />
         <View style={styles.buttonsRow}>
           <Button
             style={styles.button}
@@ -53,38 +55,7 @@ class LoginForm extends Component<Props> {
       </View>
     );
   }
-  renderInput({ input, label, meta: { touched, error, warning } }: FieldProps) {
-    var hasError = false;
-    if (touched && error !== undefined) {
-      hasError = true;
-    }
-    const newInput = {
-      ...input,
-      onBlur: () => {
-        input.onBlur(input.value);
-      },
-      onFocus: () => {
-        input.onFocus(input.value);
-      },
-      secureTextEntry: input.name === "pwd"
-    };
-    return (
-      <Item error={hasError}>
-        <Label>{label}</Label>
-        <Input
-          {...newInput}
-          keyboardType={input.name === "email" ? "email-address" : "default"}
-        />
-        {hasError ? <Text>{error}</Text> : <Text />}
-      </Item>
-    );
-  }
 }
-
-type FieldProps = WrappedFieldProps & {
-  label: string;
-  name: string;
-};
 
 function validate(values: auth.LoginFormData): FormErrors<auth.LoginFormData> {
   let errors: FormErrors<auth.LoginFormData> = {};
