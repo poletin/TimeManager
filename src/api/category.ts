@@ -19,7 +19,10 @@ export function fetchCategoryData() {
   });
 }
 
-export function updateCategory(id: string, category: categories.Single) {
+export function updateCategory(
+  id: string,
+  category: Partial<categories.Single>
+) {
   const uid = getUid();
   return firebase
     .firestore()
@@ -27,7 +30,7 @@ export function updateCategory(id: string, category: categories.Single) {
     .doc(uid)
     .collection("categories")
     .doc(id)
-    .set(category);
+    .set(category, { merge: true });
 }
 
 export function uploadTimeRecordings(recordings: categories.Recording[]) {

@@ -69,11 +69,16 @@ export type CHANGE_CATEGORY_SETTINGS = typeof CHANGE_CATEGORY_SETTINGS;
 export interface ChangeCategorySettings {
   type: CHANGE_CATEGORY_SETTINGS;
   selectedCategory: string;
+  updatedSettings: categories.SingleSettings;
 }
-export function changeCategorySettings(id: string): ChangeCategorySettings {
+export function changeCategorySettings(
+  id: string,
+  updatedSettings: categories.SingleSettings
+): ChangeCategorySettings {
   return {
     type: CHANGE_CATEGORY_SETTINGS,
-    selectedCategory: id
+    selectedCategory: id,
+    updatedSettings
   };
 }
 

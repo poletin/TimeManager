@@ -3,7 +3,7 @@ import { StoreState } from "../../../reducers";
 import CategorySettings from "../../../components/categories/settings/CategorySettings";
 import { Dispatch } from "redux";
 import * as actions from "../../../actions/";
-import { selectCategory } from "../../../actions/";
+import { selectCategory, changeCategorySettings } from "../../../actions/";
 
 function mapStateToProps({
   category: { categorySettings, categories }
@@ -16,8 +16,8 @@ function mapStateToProps({
 
 function mapDispatchToProps(dispatch: Dispatch<actions.CategoryAction>) {
   return {
-    // handleValueChange: (itemValue: string) =>
-    //   dispatch(selectCategory(itemValue))
+    onSubmit: (categoryId: string, data: categories.SingleSettings) =>
+      dispatch(changeCategorySettings(categoryId, data))
   };
 }
 

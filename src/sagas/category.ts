@@ -7,7 +7,9 @@ import {
   AuthAction,
   CategoryStartRecording,
   CategoryPauseRecording,
-  categoryRecordingsSent
+  categoryRecordingsSent,
+  ChangeCategorySettings,
+  CHANGE_CATEGORY_SETTINGS
 } from "../actions";
 import { RNFirebase } from "react-native-firebase";
 
@@ -45,10 +47,15 @@ function* _updateRecording(
   }
 }
 
+function* _updateCategorySettings(action: ChangeCategorySettings) {
+  yield call(updateCategory, action.selectedCategory, action.updatedSettings);
+}
+
 export const categorySagas = [
   takeLatest([USER_SIGNIN_SUCCESS], _fetchCategoryData),
   takeEvery(
     [CATEGORY_START_RECORDING, CATEGORY_PAUSE_RECORDING],
     _updateRecording
-  )
+  ),
+  takeEvery([CHANGE_CATEGORY_SETTINGS], _updateCategorySettings)
 ];

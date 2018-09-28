@@ -13,8 +13,11 @@ declare namespace auth {
 }
 
 declare namespace categories {
-  export interface Single {
+  export interface SingleSettings {
     name: string;
+    // weeklyTarget: number;
+  }
+  export interface Single extends SingleSettings {
     total: number;
     recordingData: {
       started: Date | null;
@@ -27,7 +30,7 @@ declare namespace categories {
     stopped: Date;
     minutes: number;
   }
-  export interface Settings {
+  export interface SettingsView {
     selectedCategory: string;
   }
 }

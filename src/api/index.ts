@@ -13,7 +13,7 @@ export const checkLoggedIn = function() {
       unsubscribe();
       if (user) {
         // Logged in
-        store.dispatch(userSignInSuccess(user.uid));
+        store.dispatch(userSignInSuccess(user));
       } else {
         store.dispatch(userSignOutSuccess());
       }

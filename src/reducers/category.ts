@@ -4,14 +4,15 @@ import {
   CATEGORY_START_RECORDING,
   CATEGORY_PAUSE_RECORDING,
   CATEGORY_RECORDINGS_SENT,
-  SELECT_CATEGORY
+  SELECT_CATEGORY,
+  CHANGE_CATEGORY_SETTINGS
 } from "../actions";
 import moment from "moment";
 
 export interface CategoryState {
   categories: { [key: string]: categories.Single };
   unsentRecordings: categories.Recording[];
-  categorySettings: categories.Settings;
+  categorySettings: categories.SettingsView;
 }
 
 const defaultValue: CategoryState = {
@@ -108,6 +109,19 @@ export default function category(
         ...state,
         categorySettings: {
           selectedCategory: action.selectedCategory
+        }
+      };
+    case CHANGE_CATEGORY_SETTINGS:
+      const updatedCategory3: categories.Single = {
+        ...state.categories[action.selectedCategory],
+        ...action.updatedSettings
+      };
+
+      return {
+        ...state,
+        categories: {
+          ...state.categories,
+          [action.selectedCategory]: updatedCategory3
         }
       };
     default:
