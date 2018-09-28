@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Text, View } from "native-base";
-import SettingsForm from "./SettingsForm";
+import CategorySettingsForm from "../../../forms/CategorySettingsForm";
 type Props = {
   category: categories.Single;
   categoryId: string;
@@ -10,7 +10,7 @@ export default class CategorySettings extends Component<Props> {
   render() {
     return (
       <View>
-        <SettingsForm
+        <CategorySettingsForm
           initialValues={this.props.category}
           onSubmit={data => {
             this.props.onSubmit(this.props.categoryId, data);

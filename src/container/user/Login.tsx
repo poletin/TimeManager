@@ -1,16 +1,20 @@
+import * as actions from "../../actions";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
+import { StoreState } from "../../reducers";
 import React, { Component } from "react";
-import { Text, Button, View, Spinner, Container } from "native-base";
-import { StyleSheet, Modal } from "react-native";
-import LoginForm from "./LoginForm";
-import BusyOverlay from "../commons/BusyOverlay";
-import Logo from "../commons/Logo";
+import { Text, Button, View } from "native-base";
+import { StyleSheet } from "react-native";
+import Logo from "../../components/commons/Logo";
+import LoginForm from "../../forms/LoginForm";
+import BusyOverlay from "../../components/commons/BusyOverlay";
 
-type LoginProps = {
+type Props = {
   onLoginAnon: () => {};
   onSignIn: (data: auth.LoginFormData) => void;
   busy: boolean;
 };
-export default class Login extends Component<LoginProps> {
+class Login extends Component<Props> {
   render() {
     return (
       <View style={styles.all}>
@@ -62,3 +66,22 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   }
 });
+
+function mapStateToProps({ auth: { busy } }: StoreState) {
+  return {
+    busy
+  };
+}
+
+function mapDispatchToProps(dispatch: Dispatch<actions.AuthAction>) {
+  return {
+    onLoginAnon: () => dispatch(actions.userSignInAnon()),
+    onSignIn: (data: auth.LoginFormData) =>
+      dispatch(actions.userSignInEmail(data))
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login);

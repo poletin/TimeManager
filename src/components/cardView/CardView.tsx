@@ -3,7 +3,7 @@ import { Card, CardItem, Text, View, Icon, Button } from "native-base";
 import category from "../../reducers/category";
 import Timer from "./Timer";
 import moment from "moment";
-import { formatMinutes } from "../../utile/TimeFormat";
+import { formatMinutes } from "../../utils/TimeFunctions";
 
 type Props = {
   category: categories.Single;

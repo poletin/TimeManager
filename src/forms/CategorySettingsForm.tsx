@@ -8,13 +8,13 @@ import {
   reduxForm
 } from "redux-form";
 import { func } from "prop-types";
-import Categories from "../../../container/categories/Categories";
+import Categories from "../container/categories/Categories";
 
 type Props = InjectedFormProps<categories.SingleSettings, {}, string> & {
   onSubmit?: (data: categories.SingleSettings) => void;
 };
 
-class SettingsForm extends Component<Props> {
+class CategorySettingsForm extends Component<Props> {
   render() {
     return (
       <View>
@@ -77,4 +77,4 @@ function validate(
 export default reduxForm({
   form: "categorySettings",
   validate
-})(SettingsForm);
+})(CategorySettingsForm);

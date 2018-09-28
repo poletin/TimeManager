@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Text, NativeBase } from "native-base";
-import { formatTimeSince } from "../../utile/TimeFormat";
+import { formatTimeSince } from "../../utils/TimeFunctions";
 
 type Props = NativeBase.Text & {
   startTime: Date;

@@ -1,12 +1,17 @@
+import { connect } from "react-redux";
+import { StoreState } from "../../../reducers";
+import { Dispatch } from "redux";
+import * as actions from "../../../actions";
 import React, { Component } from "react";
 import { Form, Picker, Icon, Item } from "native-base";
+import { selectCategory } from "../../../actions";
+
 type Props = {
   categories: { [key: string]: categories.Single };
   selectedCategory: string;
   handleValueChange: (itemValue: string) => void;
 };
-
-export default class CategorySelector extends Component<Props> {
+class CategorySelector extends Component<Props> {
   render() {
     return (
       <Form>
@@ -34,3 +39,24 @@ export default class CategorySelector extends Component<Props> {
     ));
   }
 }
+
+function mapStateToProps({
+  category: { categorySettings, categories }
+}: StoreState) {
+  return {
+    categories,
+    selectedCategory: categorySettings.selectedCategory
+  };
+}
+
+function mapDispatchToProps(dispatch: Dispatch<actions.CategoryAction>) {
+  return {
+    handleValueChange: (itemValue: string) =>
+      dispatch(selectCategory(itemValue))
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CategorySelector);
