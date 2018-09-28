@@ -3,18 +3,23 @@ import {
   FETCH_CATEGORY_DATA_SUCCESS,
   CATEGORY_START_RECORDING,
   CATEGORY_PAUSE_RECORDING,
-  CATEGORY_RECORDINGS_SENT
+  CATEGORY_RECORDINGS_SENT,
+  SELECT_CATEGORY
 } from "../actions";
 import moment from "moment";
 
 export interface CategoryState {
   categories: { [key: string]: categories.Single };
   unsentRecordings: categories.Recording[];
+  categorySettings: categories.Settings;
 }
 
 const defaultValue: CategoryState = {
   categories: {},
-  unsentRecordings: []
+  unsentRecordings: [],
+  categorySettings: {
+    selectedCategory: ""
+  }
 };
 
 export default function category(
@@ -41,7 +46,10 @@ export default function category(
 
       return {
         ...state,
-        categories: categories
+        categories: categories,
+        categorySettings: {
+          selectedCategory: Object.keys(categories)[0]
+        }
       };
     case CATEGORY_START_RECORDING:
       const updatedCategory: categories.Single = {
@@ -94,6 +102,13 @@ export default function category(
       return {
         ...state,
         unsentRecordings: []
+      };
+    case SELECT_CATEGORY:
+      return {
+        ...state,
+        categorySettings: {
+          selectedCategory: action.selectedCategory
+        }
       };
     default:
       return state;

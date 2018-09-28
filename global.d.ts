@@ -27,4 +27,7 @@ declare namespace categories {
     stopped: Date;
     minutes: number;
   }
+  export interface Settings {
+    selectedCategory: string;
+  }
 }

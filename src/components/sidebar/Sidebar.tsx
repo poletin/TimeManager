@@ -25,6 +25,11 @@ const pages = [
     name: "Einstellungen",
     route: "Settings",
     icon: "settings"
+  },
+  {
+    name: "Kategorieeinstellungen",
+    route: "CategorySettings",
+    icon: "paper"
   }
 ];
 const actions = [

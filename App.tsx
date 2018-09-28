@@ -16,6 +16,7 @@ import UserSettingsScreen from "./src/screens/UserSettingsScreen";
 import { checkLoggedIn } from "./src/api";
 import SplashScreen from "./src/screens/SplashScreen";
 import Sidebar from "./src/components/sidebar/Sidebar";
+import CategorySettingsScreen from "./src/screens/CategorySettingsScreen";
 
 const MyApp = createDrawerNavigator(
   {
@@ -27,6 +28,9 @@ const MyApp = createDrawerNavigator(
     },
     Settings: {
       screen: UserSettingsScreen
+    },
+    CategorySettings: {
+      screen: CategorySettingsScreen
     }
   },
   {

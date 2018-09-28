@@ -51,9 +51,36 @@ export function categoryRecordingsSent(): CategoryRecordingsSent {
     type: CATEGORY_RECORDINGS_SENT
   };
 }
+export const SELECT_CATEGORY = "SELECT_CATEGORY";
+export type SELECT_CATEGORY = typeof SELECT_CATEGORY;
+export interface SelectCategory {
+  type: SELECT_CATEGORY;
+  selectedCategory: string;
+}
+export function selectCategory(id: string): SelectCategory {
+  return {
+    type: SELECT_CATEGORY,
+    selectedCategory: id
+  };
+}
+
+export const CHANGE_CATEGORY_SETTINGS = "CHANGE_CATEGORY_SETTINGS";
+export type CHANGE_CATEGORY_SETTINGS = typeof CHANGE_CATEGORY_SETTINGS;
+export interface ChangeCategorySettings {
+  type: CHANGE_CATEGORY_SETTINGS;
+  selectedCategory: string;
+}
+export function changeCategorySettings(id: string): ChangeCategorySettings {
+  return {
+    type: CHANGE_CATEGORY_SETTINGS,
+    selectedCategory: id
+  };
+}
 
 export type CategoryAction =
   | FetchCategorySuccess
   | CategoryStartRecording
   | CategoryPauseRecording
-  | CategoryRecordingsSent;
+  | CategoryRecordingsSent
+  | SelectCategory
+  | ChangeCategorySettings;
