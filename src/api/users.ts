@@ -111,5 +111,5 @@ export function saveUserSettings(user: UserState) {
     .firestore()
     .collection("users")
     .doc(uid)
-    .set({ name: user.name }, { merge: true });
+    .set(user, { merge: true });
 }

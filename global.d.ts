@@ -12,6 +12,13 @@ declare namespace auth {
   }
 }
 
+declare namespace user {
+  export interface User {
+    name: string;
+    dualStudent: boolean;
+  }
+}
+
 declare namespace categories {
   export interface SingleSettings {
     name: string;

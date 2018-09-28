@@ -2,35 +2,27 @@ export const FETCH_USER_DATA_SUCCESS = "FETCH_USER_DATA_SUCCESS";
 export type FETCH_USER_DATA_SUCCESS = typeof FETCH_USER_DATA_SUCCESS;
 export interface FetchUserDataSuccess {
   type: FETCH_USER_DATA_SUCCESS;
-  userData: UserData;
+  userData: user.User;
 }
-export function fetchUserDataSuccess(userData: UserData): FetchUserDataSuccess {
+export function fetchUserDataSuccess(
+  userData: user.User
+): FetchUserDataSuccess {
   return {
     type: FETCH_USER_DATA_SUCCESS,
     userData: userData
   };
 }
 
-// TODO: Move Type
-type UserData = {
-  name: string;
-};
-
-export const USER_SETTING_CHANGED = "USER_SETTING_CHANGED";
-export type USER_SETTING_CHANGED = typeof USER_SETTING_CHANGED;
-export interface UserSettingChanged {
-  type: USER_SETTING_CHANGED;
-  key: keyof UserData;
-  value: any;
+export const CHANGE_USER_SETTINGS = "CHANGE_USER_SETTINGS";
+export type CHANGE_USER_SETTINGS = typeof CHANGE_USER_SETTINGS;
+export interface ChangeUserSettings {
+  type: CHANGE_USER_SETTINGS;
+  newSettings: user.User;
 }
-export function userSettingChanged(
-  key: keyof UserData,
-  value: any
-): UserSettingChanged {
+export function changeUserSettings(newSettings: user.User): ChangeUserSettings {
   return {
-    type: USER_SETTING_CHANGED,
-    key,
-    value
+    type: CHANGE_USER_SETTINGS,
+    newSettings
   };
 }
 
@@ -47,5 +39,5 @@ export function saveUserSettings(): SaveUserSettings {
 
 export type UserAction =
   | FetchUserDataSuccess
-  | UserSettingChanged
+  | ChangeUserSettings
   | SaveUserSettings;

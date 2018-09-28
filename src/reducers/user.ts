@@ -1,16 +1,15 @@
 import {
   UserAction,
   FETCH_USER_DATA_SUCCESS,
-  USER_SETTING_CHANGED
+  CHANGE_USER_SETTINGS
 } from "../actions";
 import { RNFirebase } from "react-native-firebase";
 
-export interface UserState {
-  name: string;
-}
+export interface UserState extends user.User {}
 
 const defaultValue: UserState = {
-  name: ""
+  name: "",
+  dualStudent: false
 };
 
 export default function user(
@@ -19,10 +18,9 @@ export default function user(
 ): UserState {
   switch (action.type) {
     case FETCH_USER_DATA_SUCCESS:
-      return { ...state, name: action.userData.name };
-    case USER_SETTING_CHANGED:
-      let newState = { ...state };
-      newState[action.key] = action.value;
+      return { ...state, ...action.userData };
+    case CHANGE_USER_SETTINGS:
+      let newState = { ...state, ...action.newSettings };
       return newState;
     default:
       return state;

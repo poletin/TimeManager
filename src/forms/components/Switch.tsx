@@ -1,6 +1,6 @@
 import React from "react";
 import { WrappedFieldProps } from "redux-form";
-import { Item, Label, Input, Text } from "native-base";
+import { Item, CheckBox, Label, Switch, Left, Right, Text } from "native-base";
 
 type Props = WrappedFieldProps & {
   label: string;
@@ -18,14 +18,20 @@ export default ({ input, label, meta: { touched, error, warning } }: Props) => {
     },
     onFocus: () => {
       input.onFocus(input.value);
+    },
+    onValueChange: () => {
+      input.onChange(!input.value);
     }
   };
 
   return (
-    <Item error={hasError}>
-      <Text>{label}</Text>
-      <Input {...newInput} />
-      {hasError ? <Text>{error}</Text> : <Text />}
+    <Item>
+      <Left>
+        <Text>{label}</Text>
+      </Left>
+      <Right>
+        <Switch {...newInput} />
+      </Right>
     </Item>
   );
 };

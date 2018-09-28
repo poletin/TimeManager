@@ -10,9 +10,8 @@ import {
   Title,
   Right
 } from "native-base";
-import NameSettings from "../container/user/settings/NameSettings";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import SaveSettings from "../container/user/settings/SaveSettings";
+import UserSettings from "../container/user/UserSettings";
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState>;
@@ -41,9 +40,8 @@ export default class UserSettingsScreen extends Component<Props> {
           <Right />
         </Header>
 
-        <Content padder>
-          <NameSettings />
-          <SaveSettings />
+        <Content padder style={{ flex: 1 }} contentContainerStyle={{ flex: 1 }}>
+          <UserSettings />
         </Content>
       </Container>
     );
