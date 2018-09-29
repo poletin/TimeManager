@@ -18,15 +18,17 @@ class CardList extends Component<Props> {
 
   renderContent() {
     console.log(this.props.categories);
-    return Object.keys(this.props.categories).map((key: string) => (
-      <CardView
-        category={this.props.categories[key]}
-        key={key}
-        id={key}
-        onStart={this.props.onCategoryStart}
-        onPause={this.props.onCategoryPause}
-      />
-    ));
+    return Object.keys(this.props.categories)
+      .sort()
+      .map((key: string) => (
+        <CardView
+          category={this.props.categories[key]}
+          key={key}
+          id={key}
+          onStart={this.props.onCategoryStart}
+          onPause={this.props.onCategoryPause}
+        />
+      ));
   }
 }
 

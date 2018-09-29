@@ -82,7 +82,7 @@ export function getUid() {
   return uid;
 }
 
-export function generateTestData(uid: string) {
+export function generateInitialData(uid: string, userName?: string) {
   const currentTime = new Date();
   const startedTime = new Date(currentTime.getMilliseconds() - 3600000);
   const userDoc = firebase
@@ -93,7 +93,10 @@ export function generateTestData(uid: string) {
   const timeDoc = workDoc.collection("times").doc(startedTime.toISOString());
 
   const genData = async function() {
-    await userDoc.set({ name: "New Name" });
+    await userDoc.set({
+      name: userName ? userName : "New Name",
+      dualStudent: false
+    });
     await workDoc.set({ total: 21, weeklyTarget: 42 });
     await timeDoc.set({
       minutes: 60,

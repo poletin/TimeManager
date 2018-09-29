@@ -1,12 +1,6 @@
 import React, { Component } from "react";
-import {
-  InjectedFormProps,
-  reduxForm,
-  FormErrors,
-  Field,
-  WrappedFieldProps
-} from "redux-form";
-import { Input, View, Item, Text, Label, Button } from "native-base";
+import { InjectedFormProps, reduxForm, FormErrors, Field } from "redux-form";
+import { Input, View, Text, Button } from "native-base";
 import { StyleSheet } from "react-native";
 import EmailInput from "./components/EmailInput";
 import PasswordInput from "./components/PasswordInput";

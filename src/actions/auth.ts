@@ -26,6 +26,21 @@ export function userSignInEmail(
   };
 }
 
+export const USER_SINGUP_EMAIL = "USER_SINGUP_EMAIL";
+export type USER_SINGUP_EMAIL = typeof USER_SINGUP_EMAIL;
+export interface UserSignUpEmail {
+  type: USER_SINGUP_EMAIL;
+  credentials: auth.LoginFormData;
+}
+export function userSignUpEmail(
+  credentials: auth.LoginFormData
+): UserSignUpEmail {
+  return {
+    type: USER_SINGUP_EMAIL,
+    credentials: credentials
+  };
+}
+
 export const USER_SIGNIN_SUCCESS = "USER_SIGNIN_SUCCESS";
 export type USER_SIGNIN_SUCCESS = typeof USER_SIGNIN_SUCCESS;
 export interface UserSignInSuccess {
@@ -75,6 +90,7 @@ export function userSignOutSuccess(): UserSignOutSuccess {
 export type AuthAction =
   | UserSignInAnon
   | UserSignInEmail
+  | UserSignUpEmail
   | UserSignInSuccess
   | UserSignInFailed
   | UserSignOut

@@ -15,6 +15,7 @@
     "react": "16.5.0",
     "react-native": "0.57.1",
     "react-native-firebase": "^5.0.0-rc4",
+    "react-native-material-dialog": "^0.7.4",
     "react-navigation": "2.16.0",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",

@@ -9,6 +9,7 @@ declare namespace auth {
     email: string;
     pwd: string;
     pressedButton?: "signIn" | "signUp";
+    name?: string;
   }
 }
 

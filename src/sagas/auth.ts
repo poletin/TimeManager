@@ -7,34 +7,37 @@ import {
   userSignInFailed,
   USER_SIGNIN_EMAIL,
   UserSignInEmail,
-  UserSignInAnon
+  UserSignInAnon,
+  USER_SINGUP_EMAIL,
+  UserSignUpEmail
 } from "../actions";
 import { call, put, takeLatest } from "redux-saga/effects";
 import {
   signInAnonym,
   signOut,
-  generateTestData,
+  generateInitialData,
   signInEmail,
   signUpEmail
 } from "../api";
 import { RNFirebase } from "react-native-firebase";
 
-function* _signIn(action: UserSignInEmail | UserSignInAnon) {
+function* _signIn(action: UserSignInEmail | UserSignInAnon | UserSignUpEmail) {
   try {
     let user: RNFirebase.User;
-    if (action.type === USER_SIGNIN_EMAIL) {
-      if (
-        action.credentials.pressedButton &&
-        action.credentials.pressedButton === "signUp"
-      ) {
-        user = yield call(signUpEmail, action.credentials);
-        yield call(generateTestData, user.uid);
-      } else {
+    switch (action.type) {
+      case USER_SIGNIN_EMAIL:
         user = yield call(signInEmail, action.credentials);
-      }
-    } else {
-      user = yield call(signInAnonym);
-      yield call(generateTestData, user.uid);
+        break;
+      case USER_SINGUP_EMAIL:
+        user = yield call(signUpEmail, action.credentials);
+        yield call(generateInitialData, user.uid, action.credentials.name);
+        break;
+      case USER_SIGNIN_ANON:
+        user = yield call(signInAnonym);
+        yield call(generateInitialData, user.uid);
+        break;
+      default:
+        throw "Unhandled Action";
     }
     yield put(userSignInSuccess(user));
   } catch (error) {
@@ -49,6 +52,6 @@ function* _signOut(action: UserAction) {
 }
 
 export const authSagas = [
-  takeLatest([USER_SIGNIN_ANON, USER_SIGNIN_EMAIL], _signIn),
+  takeLatest([USER_SIGNIN_ANON, USER_SIGNIN_EMAIL, USER_SINGUP_EMAIL], _signIn),
   takeLatest([USER_SIGNOUT], _signOut)
 ];

@@ -3,25 +3,44 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { StoreState } from "../../reducers";
 import React, { Component } from "react";
-import { Text, Button, View } from "native-base";
+import { Text, Button, View, Input, Item } from "native-base";
 import { StyleSheet } from "react-native";
 import Logo from "../../components/commons/Logo";
 import LoginForm from "../../forms/LoginForm";
 import BusyOverlay from "../../components/commons/BusyOverlay";
+import { MaterialDialog } from "react-native-material-dialog";
 
 type Props = {
   onLoginAnon: () => {};
   onSignIn: (data: auth.LoginFormData) => void;
+  onSignUp: (data: auth.LoginFormData) => void;
   busy: boolean;
 };
-class Login extends Component<Props> {
+type State = {
+  userNameDialogVisible: boolean;
+  cachedLoginData?: auth.LoginFormData;
+};
+class Login extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      userNameDialogVisible: false
+    };
+  }
   render() {
     return (
       <View style={styles.all}>
         <Logo height={250} />
         <LoginForm
           onSubmit={data => {
-            this.props.onSignIn(data);
+            if (data.pressedButton! === "signUp") {
+              this.setState({
+                userNameDialogVisible: true,
+                cachedLoginData: data
+              });
+            } else {
+              this.props.onSignIn(data);
+            }
           }}
         />
         <View style={{ flex: 0.01 }} />
@@ -35,6 +54,38 @@ class Login extends Component<Props> {
           </Button>
         </View>
         {this.props.busy ? <BusyOverlay /> : null}
+        <MaterialDialog
+          title="Bitte Namen eingeben"
+          visible={this.state.userNameDialogVisible}
+          okLabel="Weiter"
+          cancelLabel="Abbrechen"
+          onOk={() => {
+            this.setState({ userNameDialogVisible: false });
+            if (this.state.cachedLoginData) {
+              this.props.onSignUp(this.state.cachedLoginData);
+            }
+          }}
+          onCancel={() => this.setState({ userNameDialogVisible: false })}
+        >
+          <Item regular>
+            <Input
+              placeholder="Name"
+              value={
+                this.state.cachedLoginData
+                  ? this.state.cachedLoginData.name || ""
+                  : ""
+              }
+              onChangeText={(newText: string) => {
+                this.setState({
+                  cachedLoginData: {
+                    ...this.state.cachedLoginData!,
+                    name: newText
+                  }
+                });
+              }}
+            />
+          </Item>
+        </MaterialDialog>
       </View>
     );
   }
@@ -77,7 +128,9 @@ function mapDispatchToProps(dispatch: Dispatch<actions.AuthAction>) {
   return {
     onLoginAnon: () => dispatch(actions.userSignInAnon()),
     onSignIn: (data: auth.LoginFormData) =>
-      dispatch(actions.userSignInEmail(data))
+      dispatch(actions.userSignInEmail(data)),
+    onSignUp: (data: auth.LoginFormData) =>
+      dispatch(actions.userSignUpEmail(data))
   };
 }
 
