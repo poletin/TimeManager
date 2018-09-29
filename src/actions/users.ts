@@ -37,7 +37,21 @@ export function saveUserSettings(): SaveUserSettings {
   };
 }
 
+export const SAVE_USER_SETTINGS_SUCCESS = "SAVE_USER_SETTINGS_SUCCESS";
+export type SAVE_USER_SETTINGS_SUCCESS = typeof SAVE_USER_SETTINGS_SUCCESS;
+export interface SaveUserSettingsSuccess {
+  type: SAVE_USER_SETTINGS_SUCCESS;
+}
+export function saveUserSettingsSuccess(): SaveUserSettingsSuccess {
+  return {
+    type: SAVE_USER_SETTINGS_SUCCESS
+  };
+}
+
+saveUserSettingsSuccess;
+
 export type UserAction =
   | FetchUserDataSuccess
   | ChangeUserSettings
-  | SaveUserSettings;
+  | SaveUserSettings
+  | SaveUserSettingsSuccess;

@@ -4,12 +4,12 @@ import {
   fetchUserDataSuccess,
   SAVE_USER_SETTINGS,
   CHANGE_USER_SETTINGS,
-  ChangeUserSettings
+  ChangeUserSettings,
+  saveUserSettingsSuccess
 } from "../actions";
-import { call, put, takeLatest, select } from "redux-saga/effects";
+import { call, put, takeLatest } from "redux-saga/effects";
 import { fetchUserData, saveUserSettings } from "../api";
 import { StoreState } from "../reducers";
-import { UserState } from "../reducers/user";
 
 function* _fetchUserData(action: UserAction) {
   const userData: user.User = yield call(fetchUserData);
@@ -24,6 +24,7 @@ const getUserData = (state: StoreState) => state.user;
 
 function* _saveUserSettings(action: ChangeUserSettings) {
   yield call(saveUserSettings, action.newSettings);
+  yield put(saveUserSettingsSuccess());
 }
 
 export const userSagas = [

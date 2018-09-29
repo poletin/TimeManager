@@ -16,6 +16,7 @@ import { checkLoggedIn } from "./src/api";
 import SplashScreen from "./src/screens/SplashScreen";
 import Sidebar from "./src/components/sidebar/Sidebar";
 import CategorySettingsScreen from "./src/screens/CategorySettingsScreen";
+import { Root } from "native-base";
 
 const MyApp = createDrawerNavigator(
   {
@@ -38,9 +39,11 @@ type Props = {};
 export default class App extends Component<Props> {
   render() {
     return (
-      <Provider store={store}>
-        <LoginDecider />
-      </Provider>
+      <Root>
+        <Provider store={store}>
+          <LoginDecider />
+        </Provider>
+      </Root>
     );
   }
 }
