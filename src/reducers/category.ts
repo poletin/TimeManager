@@ -38,6 +38,20 @@ export default function category(
             recordingData: data.recordingData || {
               started: null,
               recordingRunning: false
+            },
+            weeklyTarget: data.weeklyTarget + "",
+            activeDays: {
+              monday: data.activeDays.monday,
+              tuesday: data.activeDays.tuesday,
+              wednesday: data.activeDays.wednesday,
+              thursday: data.activeDays.thursday,
+              friday: data.activeDays.friday,
+              saturday: data.activeDays.saturday,
+              sunday: data.activeDays.sunday
+            },
+            resetIntervall: {
+              unit: data.resetIntervall.unit,
+              amount: data.resetIntervall.amount
             }
           };
           return categoryMap;

@@ -1,6 +1,6 @@
 import React from "react";
 import { WrappedFieldProps } from "redux-form";
-import { Item, CheckBox, Label } from "native-base";
+import { Item, CheckBox, Text, Body } from "native-base";
 
 type Props = WrappedFieldProps & {
   label: string;
@@ -26,9 +26,11 @@ export default ({ input, label, meta: { touched, error, warning } }: Props) => {
   };
 
   return (
-    <Item>
+    <Item style={{ height: 50 }}>
       <CheckBox {...newInput} />
-      <Label>{label}</Label>
+      <Body>
+        <Text>{label}</Text>
+      </Body>
     </Item>
   );
 };

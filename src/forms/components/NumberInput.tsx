@@ -24,7 +24,7 @@ export default ({ input, label, meta: { touched, error, warning } }: Props) => {
   return (
     <Item error={hasError}>
       <Label>{label}</Label>
-      <Input {...newInput} />
+      <Input {...newInput} keyboardType={"numeric"} />
       {hasError ? <Text>{error}</Text> : <Text />}
     </Item>
   );

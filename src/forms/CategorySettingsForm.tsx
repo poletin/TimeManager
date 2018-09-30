@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { Item, View, Label, Input, Text, Button } from "native-base";
+import {
+  Item,
+  View,
+  Label,
+  Input,
+  Text,
+  Button,
+  InputGroup
+} from "native-base";
 import {
   InjectedFormProps,
   Field,
@@ -9,6 +17,10 @@ import {
 } from "redux-form";
 import { func } from "prop-types";
 import Categories from "../container/categories/Categories";
+import NumberInput from "./components/NumberInput";
+import TextInput from "./components/TextInput";
+import Checkbox from "./components/Checkbox";
+import ResetIntervallPicker from "./components/ResetIntervallPicker";
 
 type Props = InjectedFormProps<categories.SingleSettings, {}, string> & {
   onSubmit?: (data: categories.SingleSettings) => void;
@@ -18,7 +30,55 @@ class CategorySettingsForm extends Component<Props> {
   render() {
     return (
       <View>
-        <Field name="name" label="Name" component={this.renderInput} />
+        <Field name="name" label="Name" component={TextInput} />
+        <Field
+          name="weeklyTarget"
+          label="Wochenstunden"
+          component={NumberInput}
+        />
+        <Text style={{ fontSize: 18 }}>Arbeitstage</Text>
+        <Field name="activeDays.monday" label="Montag" component={Checkbox} />
+
+        <Field
+          name="activeDays.tuesday"
+          label="Dienstag"
+          component={Checkbox}
+        />
+
+        <Field
+          name="activeDays.wednesday"
+          label="Mittwoch"
+          component={Checkbox}
+        />
+
+        <Field
+          name="activeDays.thursday"
+          label="Donnerstag"
+          component={Checkbox}
+        />
+
+        <Field name="activeDays.friday" label="Freitag" component={Checkbox} />
+
+        <Field
+          name="activeDays.saturday"
+          label="Samstag"
+          component={Checkbox}
+        />
+
+        <Field name="activeDays.sunday" label="Sonntag" component={Checkbox} />
+
+        <Text style={{ fontSize: 18 }}>Zurücksetzintervall</Text>
+
+        <Field
+          name="resetIntervall.unit"
+          label="Zurücksetzen pro"
+          component={ResetIntervallPicker}
+        />
+        <Field
+          name="resetIntervall.amount"
+          label="Anzahl"
+          component={NumberInput}
+        />
         <Button
           primary
           onPress={data => {
@@ -34,29 +94,6 @@ class CategorySettingsForm extends Component<Props> {
       </View>
     );
   }
-  renderInput({ input, label, meta: { touched, error, warning } }: FieldProps) {
-    let hasError = false;
-    if (touched && error !== undefined) {
-      hasError = true;
-    }
-    const newInput = {
-      ...input,
-      onBlur: () => {
-        input.onBlur(input.value);
-      },
-      onFocus: () => {
-        input.onFocus(input.value);
-      }
-    };
-
-    return (
-      <Item error={hasError}>
-        <Label>{label}</Label>
-        <Input {...newInput} />
-        {hasError ? <Text>{error}</Text> : <Text />}
-      </Item>
-    );
-  }
 }
 
 type FieldProps = WrappedFieldProps & {
@@ -70,6 +107,9 @@ function validate(
   let errors: FormErrors<categories.SingleSettings> = {};
   if (!values.name) {
     errors.name = "Name nicht leer!";
+  }
+  if (!values.weeklyTarget) {
+    errors.weeklyTarget = "Wochenstunden nicht leer!";
   }
   return errors;
 }

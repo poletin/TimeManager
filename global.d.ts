@@ -23,7 +23,20 @@ declare namespace user {
 declare namespace categories {
   export interface SingleSettings {
     name: string;
-    // weeklyTarget: number;
+    weeklyTarget: string;
+    activeDays: {
+      monday: boolean;
+      tuesday: boolean;
+      wednesday: boolean;
+      thursday: boolean;
+      friday: boolean;
+      saturday: boolean;
+      sunday: boolean;
+    };
+    resetIntervall: {
+      unit: string;
+      amount: string;
+    };
   }
   export interface Single extends SingleSettings {
     total: number;
