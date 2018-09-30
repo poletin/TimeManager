@@ -10,6 +10,7 @@ type Props = {
   onStart: (id: string) => void;
   onPause: (id: string) => void;
   onSettings: (id: string) => void;
+  onInsights: (id: string) => void;
   id: string;
 };
 export default class CardView extends Component<Props> {
@@ -65,7 +66,13 @@ export default class CardView extends Component<Props> {
     return (
       <View>
         <CardItem footer style={{ justifyContent: "flex-end" }}>
-          <Button transparent dark>
+          <Button
+            onPress={() => {
+              this.props.onInsights(this.props.id);
+            }}
+            transparent
+            dark
+          >
             <Icon name="pie" />
           </Button>
           {this.renderRecordingButton()}

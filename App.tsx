@@ -17,6 +17,7 @@ import SplashScreen from "./src/screens/SplashScreen";
 import Sidebar from "./src/components/sidebar/Sidebar";
 import CategorySettingsScreen from "./src/screens/CategorySettingsScreen";
 import { Root } from "native-base";
+import CategoryInsightsScreen from "./src/screens/CategoryInsightsScreen";
 
 const MyApp = createDrawerNavigator(
   {
@@ -28,6 +29,9 @@ const MyApp = createDrawerNavigator(
     },
     CategorySettings: {
       screen: CategorySettingsScreen
+    },
+    CategoryInsights: {
+      screen: CategoryInsightsScreen
     }
   },
   {

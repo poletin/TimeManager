@@ -33,6 +33,14 @@ const pages = [
     param: {
       from: "drawer"
     }
+  },
+  {
+    name: "Inisghts",
+    route: "CategoryInsights",
+    icon: "trending-up",
+    param: {
+      from: "drawer"
+    }
   }
 ];
 const actions = [

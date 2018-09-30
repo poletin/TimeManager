@@ -1,5 +1,6 @@
 import firebase, { RNFirebase } from "react-native-firebase";
 import { getUid } from "./users";
+import moment from "moment";
 
 export function fetchCategoryData() {
   const uid = getUid();
@@ -16,6 +17,32 @@ export function fetchCategoryData() {
       })
       .catch(reject);
   });
+}
+
+export function fetchTimesOfCategory(category: string) {
+  console.log("api");
+  const uid = getUid();
+  return (
+    firebase
+      .firestore()
+      .collection("users")
+      .doc(uid)
+      .collection("categories")
+      .doc(category)
+      .collection("times")
+      // Example how to filter
+      // .where(
+      //   "started",
+      //   "<=",
+      //   moment()
+      //     .subtract(10, "day")
+      //     .toDate()
+      // )
+      .get()
+      .then((querySnapshot: RNFirebase.firestore.QuerySnapshot) =>
+        querySnapshot.docs.map(doc => doc.data())
+      )
+  );
 }
 
 export function updateCategory(

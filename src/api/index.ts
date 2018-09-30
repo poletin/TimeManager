@@ -7,15 +7,12 @@ export * from "./category";
 
 export const checkLoggedIn = function() {
   // Check if user is already signed in
-  const unsubscribe = firebase
-    .auth()
-    .onAuthStateChanged(function(user: RNFirebase.User | null) {
-      unsubscribe();
-      if (user) {
-        // Logged in
-        store.dispatch(userSignInSuccess(user));
-      } else {
-        store.dispatch(userSignOutSuccess());
-      }
-    });
+  firebase.auth().onAuthStateChanged(function(user: RNFirebase.User | null) {
+    if (user) {
+      // Logged in
+      store.dispatch(userSignInSuccess(user));
+    } else {
+      store.dispatch(userSignOutSuccess());
+    }
+  });
 };

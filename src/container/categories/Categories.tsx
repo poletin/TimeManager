@@ -12,6 +12,7 @@ type Props = {
   onCategoryStart: (id: string) => void;
   onCategoryPause: (id: string) => void;
   toCategorySettings: (id: string) => void;
+  toInsights: (id: string) => void;
 };
 class CardList extends Component<Props> {
   render() {
@@ -19,7 +20,6 @@ class CardList extends Component<Props> {
   }
 
   renderContent() {
-    console.log(this.props.categories);
     return Object.keys(this.props.categories)
       .sort()
       .map((key: string) => (
@@ -30,6 +30,7 @@ class CardList extends Component<Props> {
           onStart={this.props.onCategoryStart}
           onPause={this.props.onCategoryPause}
           onSettings={this.props.toCategorySettings}
+          onInsights={this.props.toInsights}
         />
       ));
   }
@@ -60,6 +61,10 @@ function mapDispatchToProps(
     toCategorySettings: (id: string) => {
       dispatch(actions.selectCategory(id));
       navigate("CategorySettings", { from: "card" });
+    },
+    toInsights: (id: string) => {
+      dispatch(actions.selectCategory(id));
+      navigate("CategoryInsights", { from: "card" });
     }
   };
 }

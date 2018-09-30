@@ -5,7 +5,8 @@ import {
   CATEGORY_PAUSE_RECORDING,
   CATEGORY_RECORDINGS_SENT,
   SELECT_CATEGORY,
-  CHANGE_CATEGORY_SETTINGS
+  CHANGE_CATEGORY_SETTINGS,
+  CATEGORY_FETCH_TIMES_SUCCESS
 } from "../actions";
 import moment from "moment";
 
@@ -82,20 +83,29 @@ export default function category(
         }
       };
     case CATEGORY_PAUSE_RECORDING:
-      const startTime = moment(
-        state.categories[action.categoryId].recordingData.started!
-      );
+      const prevCategory = state.categories[action.categoryId];
+      const startTime = moment(prevCategory.recordingData.started!);
       const currentTime = new Date();
       const stopTime = moment(currentTime);
       const duration = moment.duration(stopTime.diff(startTime));
       const minutes = duration.asMinutes();
       const updatedCategory2: categories.Single = {
-        ...state.categories[action.categoryId],
+        ...prevCategory,
         recordingData: {
           recordingRunning: false,
           started: null
         },
-        total: state.categories[action.categoryId].total + minutes
+        total: prevCategory.total + minutes,
+        times: prevCategory.times
+          ? [
+              ...prevCategory.times,
+              {
+                minutes: minutes,
+                started: prevCategory.recordingData.started!,
+                stopped: currentTime
+              }
+            ]
+          : undefined
       };
       return {
         ...state,
@@ -108,7 +118,7 @@ export default function category(
           {
             categoryId: action.categoryId,
             minutes: minutes,
-            started: state.categories[action.categoryId].recordingData.started!,
+            started: prevCategory.recordingData.started!,
             stopped: currentTime
           }
         ]
@@ -136,6 +146,21 @@ export default function category(
         categories: {
           ...state.categories,
           [action.selectedCategory]: updatedCategory3
+        }
+      };
+    case CATEGORY_FETCH_TIMES_SUCCESS:
+      console.log("reducer");
+
+      const updatedCategor4: categories.Single = {
+        ...state.categories[action.categoryId],
+        times: action.times
+      };
+
+      return {
+        ...state,
+        categories: {
+          ...state.categories,
+          [action.categoryId]: updatedCategor4
         }
       };
     default:

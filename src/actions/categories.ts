@@ -82,10 +82,45 @@ export function changeCategorySettings(
   };
 }
 
+export const CATEGORY_FETCH_TIMES = "CATEGORY_FETCH_TIMES";
+export type CATEGORY_FETCH_TIMES = typeof CATEGORY_FETCH_TIMES;
+export interface CategoryFetchTimes {
+  type: CATEGORY_FETCH_TIMES;
+  categoryId: string;
+}
+export function categoryFetchTimes(id: string): CategoryFetchTimes {
+  console.log("action 1");
+  return {
+    type: CATEGORY_FETCH_TIMES,
+    categoryId: id
+  };
+}
+
+export const CATEGORY_FETCH_TIMES_SUCCESS = "CATEGORY_FETCH_TIMES_SUCCESS";
+export type CATEGORY_FETCH_TIMES_SUCCESS = typeof CATEGORY_FETCH_TIMES_SUCCESS;
+export interface CategoryFetchTimesSuccess {
+  type: CATEGORY_FETCH_TIMES_SUCCESS;
+  categoryId: string;
+  times: times.Single[];
+}
+export function categoryFetchTimesSuccess(
+  id: string,
+  times: times.Single[]
+): CategoryFetchTimesSuccess {
+  console.log("action 2");
+  return {
+    type: CATEGORY_FETCH_TIMES_SUCCESS,
+    categoryId: id,
+    times: times
+  };
+}
+
 export type CategoryAction =
   | FetchCategorySuccess
   | CategoryStartRecording
   | CategoryPauseRecording
   | CategoryRecordingsSent
   | SelectCategory
-  | ChangeCategorySettings;
+  | ChangeCategorySettings
+  | CategoryFetchTimes
+  | CategoryFetchTimesSuccess;
