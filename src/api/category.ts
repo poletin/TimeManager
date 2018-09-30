@@ -1,4 +1,3 @@
-import "firebase/firestore";
 import firebase, { RNFirebase } from "react-native-firebase";
 import { getUid } from "./users";
 

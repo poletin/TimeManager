@@ -7,8 +7,6 @@
     "test": "jest"
   },
   "dependencies": {
-    "corejs": "^1.0.0",
-    "firebase": "^5.4.1",
     "moment": "^2.22.2",
     "moment-duration-format": "^2.2.2",
     "native-base": "2.7.0",
