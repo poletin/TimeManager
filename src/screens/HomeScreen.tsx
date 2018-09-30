@@ -39,7 +39,7 @@ export default class HomeScreen extends Component<HomeProps> {
           <Right />
         </Header>
         <Content padder>
-          <Categories />
+          <Categories navigate={this.props.navigation.navigate} />
         </Content>
       </Container>
     );

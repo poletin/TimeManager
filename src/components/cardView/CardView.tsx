@@ -9,6 +9,7 @@ type Props = {
   category: categories.Single;
   onStart: (id: string) => void;
   onPause: (id: string) => void;
+  onSettings: (id: string) => void;
   id: string;
 };
 export default class CardView extends Component<Props> {
@@ -68,7 +69,13 @@ export default class CardView extends Component<Props> {
             <Icon name="pie" />
           </Button>
           {this.renderRecordingButton()}
-          <Button transparent dark>
+          <Button
+            onPress={() => {
+              this.props.onSettings(this.props.id);
+            }}
+            transparent
+            dark
+          >
             <Icon name="settings" />
           </Button>
         </CardItem>

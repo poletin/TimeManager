@@ -29,12 +29,21 @@ export default class CategorySettingsScreen extends Component<Props> {
       <Container>
         <Header>
           <Left>
-            <Button
-              transparent
-              onPress={() => this.props.navigation.openDrawer()}
-            >
-              <Icon name="menu" />
-            </Button>
+            {this.props.navigation.getParam("from", "drawer") === "drawer" ? (
+              <Button
+                transparent
+                onPress={() => this.props.navigation.openDrawer()}
+              >
+                <Icon name="menu" />
+              </Button>
+            ) : (
+              <Button
+                transparent
+                onPress={() => this.props.navigation.goBack()}
+              >
+                <Icon name="arrow-back" />
+              </Button>
+            )}
           </Left>
           <Body>
             <Title>Kategorieeinstellungen</Title>
@@ -43,7 +52,10 @@ export default class CategorySettingsScreen extends Component<Props> {
         </Header>
 
         <Content padder>
-          <CategorySelection />
+          {this.props.navigation.getParam("from", "drawer") === "drawer" ? (
+            <CategorySelection />
+          ) : null}
+
           <CategorySettings />
         </Content>
       </Container>

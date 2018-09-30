@@ -29,7 +29,10 @@ const pages = [
   {
     name: "Kategorieeinstellungen",
     route: "CategorySettings",
-    icon: "paper"
+    icon: "paper",
+    param: {
+      from: "drawer"
+    }
   }
 ];
 const actions = [
@@ -57,7 +60,9 @@ export default class SideBar extends Component<Props> {
               <ListItem
                 button
                 noBorder
-                onPress={() => this.props.navigation.navigate(data.route)}
+                onPress={() =>
+                  this.props.navigation.navigate(data.route, data.param)
+                }
               >
                 <Left>
                   <Icon

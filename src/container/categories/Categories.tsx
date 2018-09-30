@@ -5,11 +5,13 @@ import { Dispatch } from "redux";
 import React, { Component } from "react";
 import { View } from "native-base";
 import CardView from "../../components/cardView/CardView";
+import { NavigationParams, NavigationAction } from "react-navigation";
 
 type Props = {
   categories: { [key: string]: categories.Single };
   onCategoryStart: (id: string) => void;
   onCategoryPause: (id: string) => void;
+  toCategorySettings: (id: string) => void;
 };
 class CardList extends Component<Props> {
   render() {
@@ -27,6 +29,7 @@ class CardList extends Component<Props> {
           id={key}
           onStart={this.props.onCategoryStart}
           onPause={this.props.onCategoryPause}
+          onSettings={this.props.toCategorySettings}
         />
       ));
   }
@@ -38,12 +41,26 @@ function mapStateToProps({ category }: StoreState) {
   };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<actions.CategoryAction>) {
+type AdditionalProps = {
+  navigate: (
+    routeNameOrOptions: string,
+    params?: NavigationParams,
+    action?: NavigationAction
+  ) => boolean;
+};
+function mapDispatchToProps(
+  dispatch: Dispatch<actions.CategoryAction>,
+  { navigate }: AdditionalProps
+) {
   return {
     onCategoryStart: (id: string) =>
       dispatch(actions.categoryStartRecording(id)),
     onCategoryPause: (id: string) =>
-      dispatch(actions.categoryPauseRecording(id))
+      dispatch(actions.categoryPauseRecording(id)),
+    toCategorySettings: (id: string) => {
+      dispatch(actions.selectCategory(id));
+      navigate("CategorySettings", { from: "card" });
+    }
   };
 }
 
