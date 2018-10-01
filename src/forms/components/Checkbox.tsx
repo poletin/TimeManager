@@ -1,6 +1,15 @@
 import React from "react";
 import { WrappedFieldProps } from "redux-form";
-import { Item, CheckBox, Text, Body } from "native-base";
+import {
+  Item,
+  CheckBox,
+  Text,
+  Body,
+  Container,
+  Left,
+  Right,
+  ListItem
+} from "native-base";
 
 type Props = WrappedFieldProps & {
   label: string;
@@ -26,11 +35,11 @@ export default ({ input, label, meta: { touched, error, warning } }: Props) => {
   };
 
   return (
-    <Item style={{ height: 50 }}>
+    <ListItem style={{ height: 50, width: "100%" }}>
       <CheckBox {...newInput} />
       <Body>
         <Text>{label}</Text>
       </Body>
-    </Item>
+    </ListItem>
   );
 };

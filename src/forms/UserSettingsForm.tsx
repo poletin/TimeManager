@@ -69,6 +69,6 @@ function validate(values: user.User): FormErrors<user.User> {
 }
 
 export default reduxForm({
-  form: "categorySettings",
+  form: "userSettings",
   validate
 })(CategorySettingsForm);

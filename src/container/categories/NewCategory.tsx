@@ -12,9 +12,28 @@ type Props = {
 };
 class NewCategory extends Component<Props> {
   render() {
+    const initialValues: categories.SingleSettings = {
+      name: "",
+      isIntervall: false,
+      weeklyTarget: "40",
+      activeDays: {
+        monday: true,
+        tuesday: true,
+        wednesday: true,
+        thursday: true,
+        friday: true,
+        saturday: false,
+        sunday: false
+      },
+      resetIntervall: {
+        unit: "weeks",
+        amount: "0"
+      }
+    };
     return (
       <View style={{ flex: 1 }}>
         <CategorySettingsForm
+          initialValues={initialValues}
           onSubmit={data => {
             this.props.onSubmit(data);
           }}

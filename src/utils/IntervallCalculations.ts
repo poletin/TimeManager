@@ -1,7 +1,7 @@
 import moment from "moment";
 
 export function isContinuous(category: categories.Single) {
-  return category.resetIntervall.unit === "endless";
+  return !category.isIntervall;
 }
 
 export function isInInterval(category: categories.Single, date: Date) {

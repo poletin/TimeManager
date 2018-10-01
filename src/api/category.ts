@@ -29,7 +29,8 @@ export function fetchCategoryData() {
                 unit: data.resetIntervall.unit,
                 amount: data.resetIntervall.amount
               },
-              lastUpdate: data.lastUpdate
+              lastUpdate: data.lastUpdate,
+              isIntervall: data.isIntervall
             };
             return categoryMap;
           },

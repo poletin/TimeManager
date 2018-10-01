@@ -42,6 +42,7 @@ declare namespace categories {
       unit: string;
       amount: string;
     };
+    isIntervall: boolean;
   }
   export type ActiveDays = {
     monday: boolean;
