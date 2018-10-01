@@ -4,11 +4,11 @@ export const FETCH_CATEGORY_DATA_SUCCESS = "FETCH_CATEGORY_DATA_SUCCESS";
 export type FETCH_CATEGORY_DATA_SUCCESS = typeof FETCH_CATEGORY_DATA_SUCCESS;
 export interface FetchCategorySuccess {
   type: FETCH_CATEGORY_DATA_SUCCESS;
-  categoryData: { [key: string]: categories.Single };
+  categoryData: categories.CategoryMap;
 }
-export function fetchCategorySuccess(categoryData: {
-  [key: string]: categories.Single;
-}): FetchCategorySuccess {
+export function fetchCategorySuccess(
+  categoryData: categories.CategoryMap
+): FetchCategorySuccess {
   return {
     type: FETCH_CATEGORY_DATA_SUCCESS,
     categoryData: categoryData

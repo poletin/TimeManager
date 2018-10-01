@@ -44,10 +44,10 @@ export default class ResetIntervallPicker extends Component<Props> {
           selectedValue={input.value}
           {...newInput}
         >
-          <Picker.Item label="Tag" value="day" />
-          <Picker.Item label="Woche" value="week" />
-          <Picker.Item label="Monat" value="month" />
-          <Picker.Item label="Jahr" value="year" />
+          <Picker.Item label="Tag" value="days" />
+          <Picker.Item label="Woche" value="weeks" />
+          <Picker.Item label="Monat" value="months" />
+          <Picker.Item label="Jahr" value="years" />
         </Picker>
       </Item>
     );

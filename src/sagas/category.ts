@@ -28,9 +28,7 @@ import { StoreState } from "../reducers";
 // import { CategoryState } from "../reducers/category";
 
 function* _fetchCategoryData(action: AuthAction) {
-  const categoryData: { [key: string]: categories.Single } = yield call(
-    fetchCategoryData
-  );
+  const categoryData: categories.CategoryMap = yield call(fetchCategoryData);
   yield put(fetchCategorySuccess(categoryData));
 }
 

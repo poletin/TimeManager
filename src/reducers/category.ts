@@ -9,6 +9,7 @@ import {
   CATEGORY_FETCH_TIMES_SUCCESS
 } from "../actions";
 import moment from "moment";
+import { calculateIntervalls } from "../utils/IntervallCalculations";
 
 export interface CategoryState {
   categories: { [key: string]: categories.Single };
@@ -30,11 +31,12 @@ export default function category(
 ): CategoryState {
   switch (action.type) {
     case FETCH_CATEGORY_DATA_SUCCESS:
+      const categories = calculateIntervalls(action.categoryData);
       return {
         ...state,
-        categories: action.categoryData,
+        categories: categories,
         categorySettings: {
-          selectedCategory: Object.keys(action.categoryData)[0]
+          selectedCategory: Object.keys(categories)[0]
         }
       };
     case CATEGORY_START_RECORDING:

@@ -14,7 +14,7 @@ export function fetchCategoryData() {
       .get()
       .then((querySnapshot: RNFirebase.firestore.QuerySnapshot) => {
         const categories = querySnapshot.docs.reduce(
-          (categoryMap: { [key: string]: categories.Single }, category) => {
+          (categoryMap: categories.CategoryMap, category) => {
             const data = category.data() as categories.Single;
             categoryMap[category.id || "none"] = {
               name: data.name || category.id || "",

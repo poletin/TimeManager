@@ -33,23 +33,25 @@ declare namespace times {
 }
 
 declare namespace categories {
+  export type CategoryMap = { [key: string]: categories.Single };
   export interface SingleSettings {
     name: string;
     weeklyTarget: string;
-    activeDays: {
-      monday: boolean;
-      tuesday: boolean;
-      wednesday: boolean;
-      thursday: boolean;
-      friday: boolean;
-      saturday: boolean;
-      sunday: boolean;
-    };
+    activeDays: ActiveDays;
     resetIntervall: {
       unit: string;
       amount: string;
     };
   }
+  export type ActiveDays = {
+    monday: boolean;
+    tuesday: boolean;
+    wednesday: boolean;
+    thursday: boolean;
+    friday: boolean;
+    saturday: boolean;
+    sunday: boolean;
+  };
   export interface Single extends SingleSettings {
     total: number;
     recordingData: {
@@ -57,6 +59,7 @@ declare namespace categories {
       recordingRunning: boolean;
     };
     times?: times.Single[];
+    lastUpdate: string;
   }
   export interface Recording {
     categoryId: string;
