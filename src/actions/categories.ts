@@ -64,6 +64,37 @@ export function selectCategory(id: string): SelectCategory {
   };
 }
 
+export const ADD_CATEGORY = "ADD_CATEGORY";
+export type ADD_CATEGORY = typeof ADD_CATEGORY;
+export interface AddCategory {
+  type: ADD_CATEGORY;
+  settings: categories.SingleSettings;
+}
+export function addCategory(settings: categories.SingleSettings): AddCategory {
+  return {
+    type: ADD_CATEGORY,
+    settings
+  };
+}
+
+export const ADD_CATEGORY_SUCCESS = "ADD_CATEGORY_SUCCESS";
+export type ADD_CATEGORY_SUCCESS = typeof ADD_CATEGORY_SUCCESS;
+export interface AddCategorySuccess {
+  type: ADD_CATEGORY_SUCCESS;
+  category: categories.Single;
+  id: string;
+}
+export function addCategorySuccess(
+  category: categories.Single,
+  id: string
+): AddCategorySuccess {
+  return {
+    type: ADD_CATEGORY_SUCCESS,
+    category,
+    id
+  };
+}
+
 export const CHANGE_CATEGORY_SETTINGS = "CHANGE_CATEGORY_SETTINGS";
 export type CHANGE_CATEGORY_SETTINGS = typeof CHANGE_CATEGORY_SETTINGS;
 export interface ChangeCategorySettings {
@@ -123,4 +154,6 @@ export type CategoryAction =
   | SelectCategory
   | ChangeCategorySettings
   | CategoryFetchTimes
-  | CategoryFetchTimesSuccess;
+  | CategoryFetchTimesSuccess
+  | AddCategory
+  | AddCategorySuccess;

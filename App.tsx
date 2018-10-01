@@ -4,8 +4,14 @@
  * @flow
  */
 
-import React, { Component } from "react";
-import { createDrawerNavigator } from "react-navigation";
+import React, { Component, RefObject } from "react";
+import {
+  createDrawerNavigator,
+  NavigationScreenProp,
+  NavigationState,
+  NavigationContainer,
+  NavigationContainerComponent
+} from "react-navigation";
 import HomeScreen from "./src/screens/HomeScreen";
 import { Provider, connect } from "react-redux";
 import store from "./src/store";
@@ -18,6 +24,8 @@ import Sidebar from "./src/components/sidebar/Sidebar";
 import CategorySettingsScreen from "./src/screens/CategorySettingsScreen";
 import { Root } from "native-base";
 import CategoryInsightsScreen from "./src/screens/CategoryInsightsScreen";
+import NewCategoryScreen from "./src/screens/NewCategoryScreen";
+import NavigationService from "./src/utils/NavigationService";
 
 const MyApp = createDrawerNavigator(
   {
@@ -32,6 +40,9 @@ const MyApp = createDrawerNavigator(
     },
     CategoryInsights: {
       screen: CategoryInsightsScreen
+    },
+    NewCategory: {
+      screen: NewCategoryScreen
     }
   },
   {
@@ -67,7 +78,13 @@ class LoginDeciderComponent extends Component<DeciderProps> {
         return <SplashScreen />;
       case "logged in":
       case "logging out":
-        return <MyApp />;
+        return (
+          <MyApp
+            ref={(navigatorRef: NavigationContainerComponent) => {
+              NavigationService.setTopLevelNavigator(navigatorRef);
+            }}
+          />
+        );
       case "logged out":
       case "logging in":
         return <LoginScreen />;

@@ -16,7 +16,7 @@ type Props = {
 };
 class CardList extends Component<Props> {
   render() {
-    return <View>{this.renderContent()}</View>;
+    return <View style={{ flex: 1 }}>{this.renderContent()}</View>;
   }
 
   renderContent() {

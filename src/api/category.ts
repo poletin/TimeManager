@@ -24,19 +24,12 @@ export function fetchCategoryData() {
                 recordingRunning: false
               },
               weeklyTarget: data.weeklyTarget + "",
-              activeDays: {
-                monday: data.activeDays.monday,
-                tuesday: data.activeDays.tuesday,
-                wednesday: data.activeDays.wednesday,
-                thursday: data.activeDays.thursday,
-                friday: data.activeDays.friday,
-                saturday: data.activeDays.saturday,
-                sunday: data.activeDays.sunday
-              },
+              activeDays: data.activeDays,
               resetIntervall: {
                 unit: data.resetIntervall.unit,
                 amount: data.resetIntervall.amount
-              }
+              },
+              lastUpdate: data.lastUpdate
             };
             return categoryMap;
           },
@@ -87,6 +80,38 @@ export function updateCategory(
     .collection("categories")
     .doc(id)
     .set(category, { merge: true });
+}
+
+export function addCategory(category: Partial<categories.Single>) {
+  const uid = getUid();
+  category.total = 0;
+  category.lastUpdate = moment().format("DD.MM.YYYY");
+  category.recordingData = {
+    recordingRunning: false,
+    started: null
+  };
+  category.activeDays = {
+    monday: false,
+    tuesday: false,
+    wednesday: false,
+    thursday: false,
+    friday: false,
+    saturday: false,
+    sunday: false,
+    ...category.activeDays
+  };
+  return firebase
+    .firestore()
+    .collection("users")
+    .doc(uid)
+    .collection("categories")
+    .add(category)
+    .then(categoryDocument => {
+      return {
+        category: category,
+        id: categoryDocument.id || "noId"
+      };
+    });
 }
 
 export function uploadTimeRecordings(recordings: categories.Recording[]) {

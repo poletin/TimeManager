@@ -6,7 +6,8 @@ import {
   CATEGORY_RECORDINGS_SENT,
   SELECT_CATEGORY,
   CHANGE_CATEGORY_SETTINGS,
-  CATEGORY_FETCH_TIMES_SUCCESS
+  CATEGORY_FETCH_TIMES_SUCCESS,
+  ADD_CATEGORY_SUCCESS
 } from "../actions";
 import moment from "moment";
 import { calculateIntervalls } from "../utils/IntervallCalculations";
@@ -37,6 +38,14 @@ export default function category(
         categories: categories,
         categorySettings: {
           selectedCategory: Object.keys(categories)[0]
+        }
+      };
+    case ADD_CATEGORY_SUCCESS:
+      return {
+        ...state,
+        categories: {
+          ...state.categories,
+          [action.id]: action.category
         }
       };
     case CATEGORY_START_RECORDING:

@@ -8,7 +8,9 @@ import {
   Right,
   Button,
   Body,
-  Content
+  Content,
+  Fab,
+  Footer
 } from "native-base";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import Categories from "../container/categories/Categories";
@@ -41,6 +43,18 @@ export default class HomeScreen extends Component<HomeProps> {
         <Content padder>
           <Categories navigate={this.props.navigation.navigate} />
         </Content>
+        <Footer>
+          <Fab
+            containerStyle={{}}
+            style={{ backgroundColor: "#5067FF" }}
+            position="bottomRight"
+            onPress={() => {
+              this.props.navigation.navigate("NewCategory");
+            }}
+          >
+            <Icon type="MaterialIcons" name="add" />
+          </Fab>
+        </Footer>
       </Container>
     );
   }

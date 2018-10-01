@@ -6,7 +6,9 @@ import {
   Input,
   Text,
   Button,
-  InputGroup
+  InputGroup,
+  Icon,
+  Fab
 } from "native-base";
 import {
   InjectedFormProps,
@@ -29,7 +31,7 @@ type Props = InjectedFormProps<categories.SingleSettings, {}, string> & {
 class CategorySettingsForm extends Component<Props> {
   render() {
     return (
-      <View>
+      <View style={{ flex: 1 }}>
         <Field name="name" label="Name" component={TextInput} />
         <Field
           name="weeklyTarget"
@@ -79,18 +81,21 @@ class CategorySettingsForm extends Component<Props> {
           label="Anzahl"
           component={NumberInput}
         />
-        <Button
-          primary
-          onPress={data => {
+
+        <Fab
+          containerStyle={{}}
+          style={{ backgroundColor: "#5067FF" }}
+          position="bottomRight"
+          onPress={() => {
             this.props.handleSubmit(data => {
               if (this.props.onSubmit) {
                 this.props.onSubmit(data);
               }
-            })(data);
+            })();
           }}
         >
-          <Text>Speichern</Text>
-        </Button>
+          <Icon type="MaterialIcons" name="save" />
+        </Fab>
       </View>
     );
   }

@@ -1,5 +1,4 @@
 import {
-  CategoryAction,
   USER_SIGNIN_SUCCESS,
   fetchCategorySuccess,
   CATEGORY_START_RECORDING,
@@ -12,20 +11,22 @@ import {
   CHANGE_CATEGORY_SETTINGS,
   CATEGORY_FETCH_TIMES,
   CategoryFetchTimes,
-  categoryFetchTimesSuccess
+  categoryFetchTimesSuccess,
+  AddCategory,
+  ADD_CATEGORY,
+  addCategorySuccess
 } from "../actions";
-import { RNFirebase } from "react-native-firebase";
 
 import { call, put, takeLatest, select, takeEvery } from "redux-saga/effects";
 import {
   fetchCategoryData,
   updateCategory,
   uploadTimeRecordings,
-  fetchTimesOfCategory
+  fetchTimesOfCategory,
+  addCategory
 } from "../api";
 import { StoreState } from "../reducers";
-// import { StoreState } from "../reducers";
-// import { CategoryState } from "../reducers/category";
+import NavigationService from "../utils/NavigationService";
 
 function* _fetchCategoryData(action: AuthAction) {
   const categoryData: categories.CategoryMap = yield call(fetchCategoryData);
@@ -53,16 +54,21 @@ function* _updateCategorySettings(action: ChangeCategorySettings) {
 }
 
 function* _fetchTimes(action: CategoryFetchTimes) {
-  console.log("saga1");
   const times: times.Single[] = yield call(
     fetchTimesOfCategory,
     action.categoryId
   );
-  console.log("saga2");
   yield put(categoryFetchTimesSuccess(action.categoryId, times));
-  console.log("saga3");
 }
 
+function* _addCategory(action: AddCategory) {
+  const newCategory: { id: string; category: categories.Single } = yield call(
+    addCategory,
+    action.settings
+  );
+  yield put(addCategorySuccess(newCategory.category, newCategory.id));
+  yield NavigationService.navigate("Home");
+}
 export const categorySagas = [
   takeLatest([USER_SIGNIN_SUCCESS], _fetchCategoryData),
   takeEvery(
@@ -70,5 +76,6 @@ export const categorySagas = [
     _updateRecording
   ),
   takeEvery([CHANGE_CATEGORY_SETTINGS], _updateCategorySettings),
-  takeEvery([CATEGORY_FETCH_TIMES], _fetchTimes)
+  takeEvery([CATEGORY_FETCH_TIMES], _fetchTimes),
+  takeEvery([ADD_CATEGORY], _addCategory)
 ];

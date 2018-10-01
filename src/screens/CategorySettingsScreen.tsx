@@ -51,7 +51,7 @@ export default class CategorySettingsScreen extends Component<Props> {
           <Right />
         </Header>
 
-        <Content padder>
+        <Content padder style={{ flex: 1 }} contentContainerStyle={{ flex: 1 }}>
           {this.props.navigation.getParam("from", "drawer") === "drawer" ? (
             <CategorySelection />
           ) : null}

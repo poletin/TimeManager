@@ -50,7 +50,7 @@ function handleEndingIntervall(category: categories.Single) {
   const lastUpdate = category.lastUpdate;
   const currentDay = moment();
   let currentTotal = category.total;
-  const nextUpdate = moment(lastUpdate).add(
+  const nextUpdate = moment(lastUpdate, "DD.MM.YYYY").add(
     //@ts-ignore - the add function expects a specific string as unit
     category.resetIntervall.amount,
     category.resetIntervall.unit
