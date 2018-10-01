@@ -26,6 +26,7 @@ import { Root } from "native-base";
 import CategoryInsightsScreen from "./src/screens/CategoryInsightsScreen";
 import NewCategoryScreen from "./src/screens/NewCategoryScreen";
 import NavigationService from "./src/utils/NavigationService";
+import CategoryDetailsScreen from "./src/screens/CategoryDetailsScreen";
 
 const MyApp = createDrawerNavigator(
   {
@@ -43,6 +44,9 @@ const MyApp = createDrawerNavigator(
     },
     NewCategory: {
       screen: NewCategoryScreen
+    },
+    CategoryDetails: {
+      screen: CategoryDetailsScreen
     }
   },
   {
