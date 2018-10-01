@@ -110,7 +110,7 @@ export default reduxForm({
 
 function getActiveDays() {
   return (
-    <View style={{ width: "100%" }}>
+    <View style={{ flex: 1 }}>
       <Text style={{ fontSize: 18 }}>Arbeitstage</Text>
       <Field name="activeDays.monday" label="Montag" component={Checkbox} />
 

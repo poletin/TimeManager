@@ -38,7 +38,7 @@ export default class NewCategoryScreen extends Component<Props> {
           <Right />
         </Header>
 
-        <Content padder>
+        <Content padder style={{ flex: 1 }} contentContainerStyle={{ flex: 1 }}>
           <NewCategory />
         </Content>
       </Container>

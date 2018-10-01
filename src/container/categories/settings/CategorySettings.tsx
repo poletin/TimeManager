@@ -15,7 +15,7 @@ type Props = {
 class CategorySettings extends Component<Props> {
   render() {
     return (
-      <View>
+      <View style={{ flex: 1 }}>
         <CategorySettingsForm
           initialValues={this.props.category}
           onSubmit={data => {
