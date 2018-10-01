@@ -14,7 +14,9 @@ import {
   categoryFetchTimesSuccess,
   AddCategory,
   ADD_CATEGORY,
-  addCategorySuccess
+  addCategorySuccess,
+  CATEGORY_ADD_MANUAL_TIME,
+  CategoryAddManualTime
 } from "../actions";
 
 import { call, put, takeLatest, select, takeEvery } from "redux-saga/effects";
@@ -34,13 +36,19 @@ function* _fetchCategoryData(action: AuthAction) {
 }
 
 function* _updateRecording(
-  action: CategoryStartRecording | CategoryPauseRecording
+  action:
+    | CategoryStartRecording
+    | CategoryPauseRecording
+    | CategoryAddManualTime
 ) {
   const getCategoryData = (state: StoreState) =>
     state.category.categories[action.categoryId];
   const category: categories.Single = yield select(getCategoryData);
   yield call(updateCategory, action.categoryId, category);
-  if (action.type === CATEGORY_PAUSE_RECORDING) {
+  if (
+    action.type === CATEGORY_PAUSE_RECORDING ||
+    action.type === CATEGORY_ADD_MANUAL_TIME
+  ) {
     const getUnsentRecordings = (state: StoreState) =>
       state.category.unsentRecordings;
     const unsent: categories.Recording[] = yield select(getUnsentRecordings);
@@ -72,7 +80,11 @@ function* _addCategory(action: AddCategory) {
 export const categorySagas = [
   takeLatest([USER_SIGNIN_SUCCESS], _fetchCategoryData),
   takeEvery(
-    [CATEGORY_START_RECORDING, CATEGORY_PAUSE_RECORDING],
+    [
+      CATEGORY_START_RECORDING,
+      CATEGORY_PAUSE_RECORDING,
+      CATEGORY_ADD_MANUAL_TIME
+    ],
     _updateRecording
   ),
   takeEvery([CHANGE_CATEGORY_SETTINGS], _updateCategorySettings),

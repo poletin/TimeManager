@@ -7,7 +7,8 @@ import {
   SELECT_CATEGORY,
   CHANGE_CATEGORY_SETTINGS,
   CATEGORY_FETCH_TIMES_SUCCESS,
-  ADD_CATEGORY_SUCCESS
+  ADD_CATEGORY_SUCCESS,
+  CATEGORY_ADD_MANUAL_TIME
 } from "../actions";
 import moment from "moment";
 import { calculateIntervalls } from "../utils/IntervallCalculations";
@@ -65,44 +66,40 @@ export default function category(
       };
     case CATEGORY_PAUSE_RECORDING:
       const prevCategory = state.categories[action.categoryId];
-      const startTime = moment(prevCategory.recordingData.started!);
-      const currentTime = new Date();
-      const stopTime = moment(currentTime);
-      const duration = moment.duration(stopTime.diff(startTime));
-      const minutes = duration.asMinutes();
-      const updatedCategory2: categories.Single = {
-        ...prevCategory,
-        recordingData: {
-          recordingRunning: false,
-          started: null
-        },
-        total: prevCategory.total + minutes,
-        times: prevCategory.times
-          ? [
-              ...prevCategory.times,
-              {
-                minutes: minutes,
-                started: prevCategory.recordingData.started!,
-                stopped: currentTime
-              }
-            ]
-          : undefined
-      };
+      const stopTime = new Date();
+      const results = updateCategoryTime(
+        prevCategory.recordingData.started!,
+        stopTime,
+        prevCategory,
+        action.categoryId
+      );
+      const newRecording = results.newRecording;
+      const updatedCategory2 = results.updatedCategory;
       return {
         ...state,
         categories: {
           ...state.categories,
           [action.categoryId]: updatedCategory2
         },
-        unsentRecordings: [
-          ...state.unsentRecordings,
-          {
-            categoryId: action.categoryId,
-            minutes: minutes,
-            started: prevCategory.recordingData.started!,
-            stopped: currentTime
-          }
-        ]
+        unsentRecordings: [...state.unsentRecordings, newRecording]
+      };
+    case CATEGORY_ADD_MANUAL_TIME:
+      const oldCategory = state.categories[action.categoryId];
+      const addTimeResults = updateCategoryTime(
+        action.started,
+        action.stopped,
+        oldCategory,
+        action.categoryId
+      );
+      const newAddedRecording = addTimeResults.newRecording;
+      const updatedCategory_Added = addTimeResults.updatedCategory;
+      return {
+        ...state,
+        categories: {
+          ...state.categories,
+          [action.categoryId]: updatedCategory_Added
+        },
+        unsentRecordings: [...state.unsentRecordings, newAddedRecording]
       };
     case CATEGORY_RECORDINGS_SENT:
       return {
@@ -147,4 +144,35 @@ export default function category(
     default:
       return state;
   }
+}
+function updateCategoryTime(
+  startTime: Date,
+  stopTime: Date,
+  prevCategory: categories.Single,
+  categoryId: string
+) {
+  const stopMoment = moment(stopTime);
+  const duration = moment.duration(stopMoment.diff(startTime));
+  const minutes = duration.asMinutes();
+
+  const timeData: times.Single = {
+    minutes: minutes,
+    started: startTime,
+    stopped: stopTime
+  };
+
+  const updatedCategory: categories.Single = {
+    ...prevCategory,
+    recordingData: {
+      recordingRunning: false,
+      started: null
+    },
+    total: prevCategory.total + minutes,
+    times: prevCategory.times ? [...prevCategory.times, timeData] : undefined
+  };
+  const newRecording: categories.Recording = {
+    ...timeData,
+    categoryId: categoryId
+  };
+  return { updatedCategory, newRecording };
 }

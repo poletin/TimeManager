@@ -6,5 +6,11 @@ export default {
       text: message,
       type: "success"
     });
+  },
+  showError(message: string) {
+    Toast.show({
+      text: message,
+      type: "danger"
+    });
   }
 };

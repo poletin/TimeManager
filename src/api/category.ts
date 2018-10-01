@@ -73,6 +73,10 @@ export function updateCategory(
   category: Partial<categories.Single>
 ) {
   const uid = getUid();
+  const adaptedCategory = { ...category };
+  if (adaptedCategory.times) {
+    delete adaptedCategory.times;
+  }
   return firebase
     .firestore()
     .collection("users")

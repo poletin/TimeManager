@@ -120,7 +120,6 @@ export interface CategoryFetchTimes {
   categoryId: string;
 }
 export function categoryFetchTimes(id: string): CategoryFetchTimes {
-  console.log("action 1");
   return {
     type: CATEGORY_FETCH_TIMES,
     categoryId: id
@@ -138,11 +137,31 @@ export function categoryFetchTimesSuccess(
   id: string,
   times: times.Single[]
 ): CategoryFetchTimesSuccess {
-  console.log("action 2");
   return {
     type: CATEGORY_FETCH_TIMES_SUCCESS,
     categoryId: id,
     times: times
+  };
+}
+
+export const CATEGORY_ADD_MANUAL_TIME = "CATEGORY_ADD_MANUAL_TIME";
+export type CATEGORY_ADD_MANUAL_TIME = typeof CATEGORY_ADD_MANUAL_TIME;
+export interface CategoryAddManualTime {
+  type: CATEGORY_ADD_MANUAL_TIME;
+  categoryId: string;
+  started: Date;
+  stopped: Date;
+}
+export function categoryAddManualTime(
+  categoryId: string,
+  started: Date,
+  stopped: Date
+): CategoryAddManualTime {
+  return {
+    type: CATEGORY_ADD_MANUAL_TIME,
+    categoryId,
+    started,
+    stopped
   };
 }
 
@@ -156,4 +175,5 @@ export type CategoryAction =
   | CategoryFetchTimes
   | CategoryFetchTimesSuccess
   | AddCategory
-  | AddCategorySuccess;
+  | AddCategorySuccess
+  | CategoryAddManualTime;
