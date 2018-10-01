@@ -13,7 +13,37 @@ export function fetchCategoryData() {
       .collection("categories")
       .get()
       .then((querySnapshot: RNFirebase.firestore.QuerySnapshot) => {
-        resolve(querySnapshot.docs);
+        const categories = querySnapshot.docs.reduce(
+          (categoryMap: { [key: string]: categories.Single }, category) => {
+            const data = category.data() as categories.Single;
+            categoryMap[category.id || "none"] = {
+              name: data.name || category.id || "",
+              total: data.total,
+              recordingData: data.recordingData || {
+                started: null,
+                recordingRunning: false
+              },
+              weeklyTarget: data.weeklyTarget + "",
+              activeDays: {
+                monday: data.activeDays.monday,
+                tuesday: data.activeDays.tuesday,
+                wednesday: data.activeDays.wednesday,
+                thursday: data.activeDays.thursday,
+                friday: data.activeDays.friday,
+                saturday: data.activeDays.saturday,
+                sunday: data.activeDays.sunday
+              },
+              resetIntervall: {
+                unit: data.resetIntervall.unit,
+                amount: data.resetIntervall.amount
+              }
+            };
+            return categoryMap;
+          },
+          {}
+        );
+
+        resolve(categories);
       })
       .catch(reject);
   });

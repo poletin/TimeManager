@@ -4,11 +4,11 @@ export const FETCH_CATEGORY_DATA_SUCCESS = "FETCH_CATEGORY_DATA_SUCCESS";
 export type FETCH_CATEGORY_DATA_SUCCESS = typeof FETCH_CATEGORY_DATA_SUCCESS;
 export interface FetchCategorySuccess {
   type: FETCH_CATEGORY_DATA_SUCCESS;
-  categoryData: RNFirebase.firestore.DocumentSnapshot[];
+  categoryData: { [key: string]: categories.Single };
 }
-export function fetchCategorySuccess(
-  categoryData: RNFirebase.firestore.DocumentSnapshot[]
-): FetchCategorySuccess {
+export function fetchCategorySuccess(categoryData: {
+  [key: string]: categories.Single;
+}): FetchCategorySuccess {
   return {
     type: FETCH_CATEGORY_DATA_SUCCESS,
     categoryData: categoryData
