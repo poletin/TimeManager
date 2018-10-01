@@ -1,10 +1,21 @@
 import moment from "moment";
 
+export function isContinuous(category: categories.Single) {
+  return category.resetIntervall.unit === "endless";
+}
+
+export function isInInterval(category: categories.Single, date: Date) {
+  if (isContinuous(category)) {
+    return true;
+  }
+  return moment(category.lastUpdate).isSameOrBefore(date);
+}
+
 export function calculateIntervalls(categories: categories.CategoryMap) {
   const updatedCategories: categories.CategoryMap = {};
   Object.keys(categories).forEach(key => {
     const currCategory = categories[key];
-    if (currCategory.resetIntervall.unit === "endless") {
+    if (isContinuous(currCategory)) {
       updatedCategories[key] = handleEndlessIntervall(currCategory);
     } else {
       updatedCategories[key] = handleEndingIntervall(currCategory);

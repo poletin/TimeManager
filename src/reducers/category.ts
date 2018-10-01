@@ -11,7 +11,10 @@ import {
   CATEGORY_ADD_MANUAL_TIME
 } from "../actions";
 import moment from "moment";
-import { calculateIntervalls } from "../utils/IntervallCalculations";
+import {
+  calculateIntervalls,
+  isInInterval
+} from "../utils/IntervallCalculations";
 
 export interface CategoryState {
   categories: { [key: string]: categories.Single };
@@ -145,6 +148,7 @@ export default function category(
       return state;
   }
 }
+
 function updateCategoryTime(
   startTime: Date,
   stopTime: Date,
@@ -167,7 +171,9 @@ function updateCategoryTime(
       recordingRunning: false,
       started: null
     },
-    total: prevCategory.total + minutes,
+    total: isInInterval(prevCategory, startTime)
+      ? prevCategory.total + minutes
+      : prevCategory.total,
     times: prevCategory.times ? [...prevCategory.times, timeData] : undefined
   };
   const newRecording: categories.Recording = {

@@ -36,16 +36,18 @@ export class CategoryDetailList extends Component<Props> {
             </Right>
           </ListItem>
           {this.props.times.length > 0 ? (
-            this.props.times.map(time => (
-              <ListItem key={time.started.toISOString()}>
-                <Left>
-                  <H2>{formatDateTime(time.started)}</H2>
-                </Left>
-                <Right>
-                  <H2>{formatMinutes(time.minutes)}</H2>
-                </Right>
-              </ListItem>
-            ))
+            this.props.times
+              .sort((a, b) => a.started.getTime() - b.started.getTime())
+              .map(time => (
+                <ListItem key={time.started.toISOString()}>
+                  <Left>
+                    <H2>{formatDateTime(time.started)}</H2>
+                  </Left>
+                  <Right>
+                    <H2>{formatMinutes(time.minutes)}</H2>
+                  </Right>
+                </ListItem>
+              ))
           ) : (
             <ListItem>
               <Text>No Data</Text>
