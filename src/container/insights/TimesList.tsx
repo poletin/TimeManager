@@ -19,8 +19,6 @@ type Props = {
 class InsightsList extends Component<Props> {
   componentWillMount() {
     if (this.props.times.length === 0) {
-      console.log("LoadingData");
-
       this.props.loadData(this.props.categoryId);
     }
   }
@@ -50,12 +48,9 @@ function mapStateToProps({
   category: { categorySettings, categories }
 }: StoreState) {
   const times = categories[categorySettings.selectedCategory].times;
-  console.log(times);
   const groupedTimes: { [key: string]: times.DisplayTime } = times
     ? times.reduce((obj: { [key: string]: times.DisplayTime }, curr) => {
         const date = moment(curr.started).format("DD.MM.YYYY");
-        console.log("Date");
-
         if (!obj[date]) {
           obj[date] = {
             date: date,

@@ -15,6 +15,17 @@ export function fetchCategorySuccess(
   };
 }
 
+export const FETCH_CATEGORY_DATA = "FETCH_CATEGORY_DATA";
+export type FETCH_CATEGORY_DATA = typeof FETCH_CATEGORY_DATA;
+export interface FetchCategoryData {
+  type: FETCH_CATEGORY_DATA;
+}
+export function fetchCategoryData(): FetchCategoryData {
+  return {
+    type: FETCH_CATEGORY_DATA
+  };
+}
+
 export const CATEGORY_START_RECORDING = "CATEGORY_START_RECORDING";
 export type CATEGORY_START_RECORDING = typeof CATEGORY_START_RECORDING;
 export interface CategoryStartRecording {
@@ -167,6 +178,7 @@ export function categoryAddManualTime(
 
 export type CategoryAction =
   | FetchCategorySuccess
+  | FetchCategoryData
   | CategoryStartRecording
   | CategoryPauseRecording
   | CategoryRecordingsSent

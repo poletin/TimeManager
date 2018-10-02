@@ -29,6 +29,7 @@ import NavigationService from "./src/utils/NavigationService";
 import CategoryDetailsScreen from "./src/screens/CategoryDetailsScreen";
 import HolidayScreen from "./src/screens/HolidayScreen";
 import NewHolidayScreen from "./src/screens/NewHolidayScreen";
+import NotificationService from "./src/utils/NotificationService";
 
 const MyApp = createDrawerNavigator(
   {
@@ -64,6 +65,21 @@ const MyApp = createDrawerNavigator(
 
 type Props = {};
 export default class App extends Component<Props> {
+  notificationDisplayedListener: () => any = () => {};
+  notificationListener: () => any = () => {};
+  notificationOpenedListener: () => any = () => {};
+
+  async componentDidMount() {
+    NotificationService.handleInitialNotification();
+    this.notificationListener = NotificationService.getNotificationListener();
+    this.notificationOpenedListener = NotificationService.getNotificationOpenedListener();
+    this.notificationDisplayedListener = NotificationService.getNotificationDisplayedListener();
+  }
+  componentWillUnmount() {
+    this.notificationDisplayedListener();
+    this.notificationListener();
+    this.notificationOpenedListener();
+  }
   render() {
     return (
       <Root>

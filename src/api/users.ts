@@ -68,7 +68,6 @@ export function fetchUserData() {
     .doc(uid);
 
   return userDoc.get().then(doc => {
-    console.log(doc);
     return doc.data();
   });
 }

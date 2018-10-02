@@ -20,7 +20,7 @@ function* _fetchUserData(action: UserAction) {
     yield put(fetchHolidaysSuccess(holidays));
     yield put(fetchUserDataSuccess(userData));
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 

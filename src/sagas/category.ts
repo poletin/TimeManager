@@ -16,7 +16,8 @@ import {
   ADD_CATEGORY,
   addCategorySuccess,
   CATEGORY_ADD_MANUAL_TIME,
-  CategoryAddManualTime
+  CategoryAddManualTime,
+  FETCH_CATEGORY_DATA
 } from "../actions";
 
 import { call, put, takeLatest, select, takeEvery } from "redux-saga/effects";
@@ -78,7 +79,7 @@ function* _addCategory(action: AddCategory) {
   yield NavigationService.navigate("Home");
 }
 export const categorySagas = [
-  takeLatest([USER_SIGNIN_SUCCESS], _fetchCategoryData),
+  takeLatest([USER_SIGNIN_SUCCESS, FETCH_CATEGORY_DATA], _fetchCategoryData),
   takeEvery(
     [
       CATEGORY_START_RECORDING,

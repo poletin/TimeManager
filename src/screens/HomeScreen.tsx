@@ -14,6 +14,8 @@ import {
 } from "native-base";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import Categories from "../container/categories/Categories";
+import store from "../store";
+import { fetchCategoryData } from "../actions";
 type HomeProps = {
   navigation: NavigationScreenProp<NavigationState>;
 };
@@ -38,7 +40,16 @@ export default class HomeScreen extends Component<HomeProps> {
           <Body>
             <Title>Home Screen</Title>
           </Body>
-          <Right />
+          <Right>
+            <Button
+              transparent
+              onPress={() => {
+                store.dispatch(fetchCategoryData());
+              }}
+            >
+              <Icon name="refresh" />
+            </Button>
+          </Right>
         </Header>
         <Content padder>
           <Categories />

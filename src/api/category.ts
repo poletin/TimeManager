@@ -44,7 +44,6 @@ export function fetchCategoryData() {
 }
 
 export function fetchTimesOfCategory(category: string) {
-  console.log("api");
   const uid = getUid();
   return (
     firebase

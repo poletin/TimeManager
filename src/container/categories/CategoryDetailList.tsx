@@ -18,8 +18,6 @@ type Props = {
 export class CategoryDetailList extends Component<Props> {
   componentWillMount() {
     if (this.props.times.length === 0) {
-      console.log("LoadingData");
-
       this.props.loadData(this.props.categoryId);
     }
   }

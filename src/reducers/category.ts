@@ -8,18 +8,22 @@ import {
   CHANGE_CATEGORY_SETTINGS,
   CATEGORY_FETCH_TIMES_SUCCESS,
   ADD_CATEGORY_SUCCESS,
-  CATEGORY_ADD_MANUAL_TIME
+  CATEGORY_ADD_MANUAL_TIME,
+  FETCH_CATEGORY_DATA
 } from "../actions";
 import moment from "moment";
 import {
   calculateIntervalls,
   isInInterval
 } from "../utils/IntervallCalculations";
+import NotificationService from "../utils/NotificationService";
+import { calculateFinishedTime } from "../utils/TimeFunctions";
 
 export interface CategoryState {
   categories: { [key: string]: categories.Single };
   unsentRecordings: categories.Recording[];
   categorySettings: categories.SettingsView;
+  isLoading: boolean;
 }
 
 const defaultValue: CategoryState = {
@@ -27,7 +31,8 @@ const defaultValue: CategoryState = {
   unsentRecordings: [],
   categorySettings: {
     selectedCategory: ""
-  }
+  },
+  isLoading: true
 };
 
 export default function category(
@@ -35,6 +40,11 @@ export default function category(
   action: CategoryAction
 ): CategoryState {
   switch (action.type) {
+    case FETCH_CATEGORY_DATA:
+      return {
+        ...state,
+        isLoading: true
+      };
     case FETCH_CATEGORY_DATA_SUCCESS:
       const categories = calculateIntervalls(action.categoryData);
       return {
@@ -42,7 +52,8 @@ export default function category(
         categories: categories,
         categorySettings: {
           selectedCategory: Object.keys(categories)[0]
-        }
+        },
+        isLoading: false
       };
     case ADD_CATEGORY_SUCCESS:
       return {
@@ -60,6 +71,13 @@ export default function category(
           started: new Date()
         }
       };
+      if (updatedCategory.total < 0) {
+        NotificationService.scheduleCategoryDoneNotification(
+          action.categoryId,
+          updatedCategory.name,
+          calculateFinishedTime(updatedCategory.total)
+        );
+      }
       return {
         ...state,
         categories: {
@@ -78,6 +96,7 @@ export default function category(
       );
       const newRecording = results.newRecording;
       const updatedCategory2 = results.updatedCategory;
+      NotificationService.cancelNotificationIfExists(action.categoryId);
       return {
         ...state,
         categories: {
@@ -130,8 +149,6 @@ export default function category(
         }
       };
     case CATEGORY_FETCH_TIMES_SUCCESS:
-      console.log("reducer");
-
       const updatedCategor4: categories.Single = {
         ...state.categories[action.categoryId],
         times: action.times

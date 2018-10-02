@@ -6,6 +6,7 @@ import React, { Component } from "react";
 import { View } from "native-base";
 import CardView from "../../components/cardView/CardView";
 import NavigationService from "../../utils/NavigationService";
+import BusyOverlay from "../../components/commons/BusyOverlay";
 
 type Props = {
   categories: { [key: string]: categories.Single };
@@ -14,10 +15,16 @@ type Props = {
   toCategorySettings: (id: string) => void;
   toInsights: (id: string) => void;
   toDetails: (id: string) => void;
+  isLoading: boolean;
 };
 class CardList extends Component<Props> {
   render() {
-    return <View style={{ flex: 1 }}>{this.renderContent()}</View>;
+    return (
+      <View style={{ flex: 1 }}>
+        {this.renderContent()}
+        {this.props.isLoading ? <BusyOverlay /> : null}
+      </View>
+    );
   }
 
   renderContent() {
@@ -40,7 +47,8 @@ class CardList extends Component<Props> {
 
 function mapStateToProps({ category }: StoreState) {
   return {
-    categories: category.categories
+    categories: category.categories,
+    isLoading: category.isLoading
   };
 }
 
