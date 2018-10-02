@@ -41,6 +41,14 @@ const pages = [
     param: {
       from: "drawer"
     }
+  },
+  {
+    name: "Freie Tage",
+    route: "Holidays",
+    icon: "calendar",
+    param: {
+      from: "drawer"
+    }
   }
 ];
 const actions = [

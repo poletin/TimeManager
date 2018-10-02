@@ -20,6 +20,17 @@ declare namespace user {
   }
 }
 
+declare namespace holidays {
+  export type HolidayMap = { [key: string]: holidays.Holiday };
+  export interface Holiday {
+    name: string;
+    isFullDay: boolean;
+    startDay?: Date;
+    endDay?: Date;
+    hours?: number;
+  }
+}
+
 declare namespace times {
   export interface DisplayTime {
     date: string;

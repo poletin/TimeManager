@@ -5,15 +5,19 @@ import {
   SAVE_USER_SETTINGS,
   CHANGE_USER_SETTINGS,
   ChangeUserSettings,
-  saveUserSettingsSuccess
+  saveUserSettingsSuccess,
+  fetchHolidaysSuccess
 } from "../actions";
 import { call, put, takeLatest } from "redux-saga/effects";
 import { fetchUserData, saveUserSettings } from "../api";
 import { StoreState } from "../reducers";
+import { fetchHolidays } from "../api/holiday";
 
 function* _fetchUserData(action: UserAction) {
-  const userData: user.User = yield call(fetchUserData);
   try {
+    const userData: user.User = yield call(fetchUserData);
+    const holidays: holidays.HolidayMap = yield call(fetchHolidays);
+    yield put(fetchHolidaysSuccess(holidays));
     yield put(fetchUserDataSuccess(userData));
   } catch (error) {
     console.log(error);
