@@ -25,8 +25,8 @@ declare namespace holidays {
   export interface Holiday {
     name: string;
     isFullDay: boolean;
-    startDay?: Date;
-    endDay?: Date;
+    startDay: Date;
+    endDay: Date;
     hours?: number;
   }
 }

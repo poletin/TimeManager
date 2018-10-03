@@ -49,7 +49,11 @@ export class CategorySettingsForm extends Component<Props> {
         </ListItem>
 
         <ListItem>
-          <Field name="weeklyTarget" label="Zielzeit" component={NumberInput} />
+          <Field
+            name="weeklyTarget"
+            label="Zielzeit (in Stunden)"
+            component={NumberInput}
+          />
         </ListItem>
 
         <ListItem>
@@ -98,7 +102,7 @@ function validate(
     errors.name = "Name nicht leer!";
   }
   if (!values.weeklyTarget) {
-    errors.weeklyTarget = "Wochenstunden nicht leer!";
+    errors.weeklyTarget = "Zielzeit nicht leer!";
   }
   return errors;
 }

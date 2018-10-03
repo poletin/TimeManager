@@ -55,8 +55,26 @@ export function saveHolidaySuccess(
   };
 }
 
+export const FETCH_PUBLIC_HOLIDAYS = "FETCH_PUBLIC_HOLIDAYS";
+export type FETCH_PUBLIC_HOLIDAYS = typeof FETCH_PUBLIC_HOLIDAYS;
+export interface FetchPublicHolidays {
+  type: FETCH_PUBLIC_HOLIDAYS;
+  state: string;
+  year: string;
+}
+export function fetchPublicHolidays(
+  state: string,
+  year: string
+): FetchPublicHolidays {
+  return {
+    type: FETCH_PUBLIC_HOLIDAYS,
+    state,
+    year
+  };
+}
 export type HolidayAction =
   | FetchHolidays
   | FetchHolidaysSuccess
   | SaveHoliday
-  | SaveHolidaySuccess;
+  | SaveHolidaySuccess
+  | FetchPublicHolidays;

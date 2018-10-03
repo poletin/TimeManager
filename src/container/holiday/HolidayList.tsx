@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { StoreState } from "../../reducers";
 import React, { Component } from "react";
-import { View, Text, ListItem, Left, Right, Content, Body } from "native-base";
+import { View, Text, ListItem, Left, Right, Body, List } from "native-base";
 import moment from "moment";
 
 type Props = {
@@ -9,13 +9,20 @@ type Props = {
 };
 class HolidayList extends Component<Props> {
   render() {
-    return <View style={{ flex: 1 }}>{this.renderContent()}</View>;
+    return (
+      <View>
+        <List>{this.renderContent()}</List>
+      </View>
+    );
   }
 
   renderContent() {
     return Object.keys(this.props.holidays)
-      .sort()
-      .map((key: string) => (
+      .map((key: string) => ({ key: key, holiday: this.props.holidays[key] }))
+      .sort(
+        (a, b) => a.holiday.startDay.getTime() - b.holiday.startDay.getTime()
+      )
+      .map(({ holiday, key }) => (
         <ListItem key={key}>
           <Left
             style={{
@@ -24,19 +31,17 @@ class HolidayList extends Component<Props> {
               justifyContent: "flex-start"
             }}
           >
+            <Text>{moment(holiday.startDay).format("DD.MM.YYYY")}</Text>
             <Text>
-              {moment(this.props.holidays[key].startDay).format("DD.MM.YYYY")}
-            </Text>
-            <Text>
-              {this.props.holidays[key].isFullDay
-                ? moment(this.props.holidays[key].endDay).format("DD.MM.YYYY")
-                : this.props.holidays[key].hours + "h"}
+              {holiday.isFullDay
+                ? moment(holiday.endDay).format("DD.MM.YYYY")
+                : holiday.hours + "h"}
             </Text>
           </Left>
           <Body />
           <Right style={{ flex: 1 }}>
-            <Text style={{ color: "grey" }}>
-              {this.props.holidays[key].name}
+            <Text style={{ color: "grey", textAlign: "right" }}>
+              {holiday.name}
             </Text>
           </Right>
         </ListItem>

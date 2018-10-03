@@ -41,14 +41,14 @@ function handleEndlessIntervall(category: categories.Single) {
     (activeDays.friday ? 1 : 0) +
     (activeDays.saturday ? 1 : 0) +
     (activeDays.sunday ? 1 : 0);
-  const hoursPerDay = parseInt(weeklyTarget) / dayCount;
+  const minutsPerDay = (parseInt(weeklyTarget) * 60) / dayCount;
   let lastChecked = moment(lastUpdate, "DD.MM.YYYY");
   do {
     lastChecked = lastChecked.add(1, "day");
     const dayOfWeek = lastChecked.format("E");
     const isActive = formatActiveDays(activeDays)[dayOfWeek];
     if (isActive) {
-      currentTotal = currentTotal - hoursPerDay;
+      currentTotal = currentTotal - minutsPerDay;
     }
   } while (lastChecked.format("DD.MM.YYYY") !== currentDay);
   return {

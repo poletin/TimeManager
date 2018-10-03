@@ -4,11 +4,19 @@ import {
   FetchHolidays,
   saveHolidaySuccess,
   SAVE_HOLIDAY,
-  SaveHoliday
+  SaveHoliday,
+  FETCH_PUBLIC_HOLIDAYS,
+  FetchPublicHolidays,
+  fetchHolidays as fetchHolidaysAction
 } from "../actions";
 
 import { call, put, takeLatest, takeEvery } from "redux-saga/effects";
-import { saveHoliday, fetchHolidays } from "../api";
+import {
+  saveHoliday,
+  fetchHolidays,
+  fetchPublicHolidays,
+  batchSaveHolidays
+} from "../api";
 
 import NavigationService from "../utils/NavigationService";
 function* _fetchHoliday(action: FetchHolidays) {
@@ -22,7 +30,18 @@ function* _saveHoliday(action: SaveHoliday) {
   yield NavigationService.navigate("Holidays");
 }
 
+function* _fetchPublicHoliday(action: FetchPublicHolidays) {
+  const holidays: holidays.Holiday[] = yield call(
+    fetchPublicHolidays,
+    action.state,
+    action.year
+  );
+  yield call(batchSaveHolidays, holidays);
+  yield put(fetchHolidaysAction()); // Fetch all holidays again instead of merging the new ones
+}
+
 export const holidaySagas = [
   takeLatest([FETCH_HOLIDAYS], _fetchHoliday),
-  takeEvery([SAVE_HOLIDAY], _saveHoliday)
+  takeEvery([SAVE_HOLIDAY], _saveHoliday),
+  takeLatest([FETCH_PUBLIC_HOLIDAYS], _fetchPublicHoliday)
 ];
