@@ -18,7 +18,8 @@ import {
   CATEGORY_ADD_MANUAL_TIME,
   CategoryAddManualTime,
   FETCH_CATEGORY_DATA,
-  fetchHolidaysSuccess
+  fetchHolidaysSuccess,
+  changeCategorySettingsSuccess
 } from "../actions";
 
 import { call, put, takeLatest, select, takeEvery } from "redux-saga/effects";
@@ -64,6 +65,7 @@ function* _updateRecording(
 
 function* _updateCategorySettings(action: ChangeCategorySettings) {
   yield call(updateCategory, action.selectedCategory, action.updatedSettings);
+  yield put(changeCategorySettingsSuccess());
 }
 
 function* _fetchTimes(action: CategoryFetchTimes) {

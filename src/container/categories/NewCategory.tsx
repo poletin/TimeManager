@@ -6,9 +6,11 @@ import { addCategory } from "../../actions";
 import React, { Component } from "react";
 import { View } from "native-base";
 import CategorySettingsForm from "../../forms/CategorySettingsForm";
+import BusyOverlay from "../../components/commons/BusyOverlay";
 
 type Props = {
   onSubmit: (data: categories.SingleSettings) => void;
+  isLoading: boolean;
 };
 class NewCategory extends Component<Props> {
   render() {
@@ -32,6 +34,7 @@ class NewCategory extends Component<Props> {
     };
     return (
       <View style={{ flex: 1 }}>
+        {this.props.isLoading ? <BusyOverlay /> : undefined}
         <CategorySettingsForm
           initialValues={initialValues}
           onSubmit={data => {
@@ -42,6 +45,11 @@ class NewCategory extends Component<Props> {
     );
   }
 }
+function mapStateToProps({ category: { isLoading } }: StoreState) {
+  return {
+    isLoading
+  };
+}
 
 function mapDispatchToProps(dispatch: Dispatch<actions.CategoryAction>) {
   return {
@@ -50,6 +58,6 @@ function mapDispatchToProps(dispatch: Dispatch<actions.CategoryAction>) {
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(NewCategory);

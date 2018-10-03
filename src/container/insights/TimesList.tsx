@@ -9,12 +9,14 @@ import { changeCategorySettings, categoryFetchTimes } from "../../actions";
 import moment from "moment";
 import { formatMinutes } from "../../utils/TimeFunctions";
 import InsightListItem from "../../components/categories/insights/InsightListItem";
+import BusyOverlay from "../../components/commons/BusyOverlay";
 
 type Props = {
   categoryId: string;
   times: times.DisplayTime[];
   maxTime: number;
   loadData: (categoryId: string) => void;
+  isLoading: boolean;
 };
 class InsightsList extends Component<Props> {
   componentWillMount() {
@@ -25,6 +27,7 @@ class InsightsList extends Component<Props> {
   render() {
     return (
       <View>
+        {this.props.isLoading ? <BusyOverlay /> : undefined}
         <List>
           {this.props.times.length > 0 ? (
             this.props.times.map(time => (
@@ -45,7 +48,7 @@ class InsightsList extends Component<Props> {
   }
 }
 function mapStateToProps({
-  category: { categorySettings, categories }
+  category: { categorySettings, categories, isLoading }
 }: StoreState) {
   const times = categories[categorySettings.selectedCategory].times;
   const groupedTimes: { [key: string]: times.DisplayTime } = times
@@ -67,7 +70,8 @@ function mapStateToProps({
     maxTime: Object.keys(groupedTimes)
       .map(key => groupedTimes[key].minutes)
       .reduce((prev, cur) => Math.max(prev, cur), 0),
-    categoryId: categorySettings.selectedCategory
+    categoryId: categorySettings.selectedCategory,
+    isLoading
   };
 }
 

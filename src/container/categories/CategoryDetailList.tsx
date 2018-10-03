@@ -9,12 +9,15 @@ import {
 } from "../../utils/TimeFunctions";
 import { Dispatch } from "redux";
 import { CategoryAction, categoryFetchTimes } from "../../actions";
+import BusyOverlay from "../../components/commons/BusyOverlay";
 
 type Props = {
   categoryId: string;
   times: times.Single[];
   loadData: (categoryId: string) => void;
+  isLoading: boolean;
 };
+
 export class CategoryDetailList extends Component<Props> {
   componentWillMount() {
     if (this.props.times.length === 0) {
@@ -24,6 +27,7 @@ export class CategoryDetailList extends Component<Props> {
   render() {
     return (
       <View>
+        {this.props.isLoading ? <BusyOverlay /> : undefined}
         <List>
           <ListItem>
             <Left>
@@ -58,12 +62,13 @@ export class CategoryDetailList extends Component<Props> {
 }
 
 function mapStateToProps({
-  category: { categorySettings, categories }
+  category: { categorySettings, categories, isLoading }
 }: StoreState) {
   const times = categories[categorySettings.selectedCategory].times || [];
   return {
     times,
-    categoryId: categorySettings.selectedCategory
+    categoryId: categorySettings.selectedCategory,
+    isLoading
   };
 }
 

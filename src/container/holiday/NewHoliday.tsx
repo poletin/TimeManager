@@ -6,14 +6,17 @@ import { saveHoliday, fetchHolidays } from "../../actions";
 import React, { Component } from "react";
 import { View } from "native-base";
 import NewHolidayComponent from "../../components/NewHolidayComponent";
+import BusyOverlay from "../../components/commons/BusyOverlay";
 
 type Props = {
   onSubmit: (data: holidays.Holiday) => void;
+  isLoading: boolean;
 };
 class NewHoliday extends Component<Props> {
   render() {
     return (
       <View style={{ flex: 1 }}>
+        {this.props.isLoading ? <BusyOverlay /> : undefined}
         <NewHolidayComponent
           onSubmit={(data: holidays.Holiday) => {
             this.props.onSubmit(data);
@@ -22,6 +25,12 @@ class NewHoliday extends Component<Props> {
       </View>
     );
   }
+}
+
+function mapStateToProps({ category: { isLoading } }: StoreState) {
+  return {
+    isLoading
+  };
 }
 
 function mapDispatchToProps(dispatch: Dispatch<actions.HolidayAction>) {
@@ -33,6 +42,6 @@ function mapDispatchToProps(dispatch: Dispatch<actions.HolidayAction>) {
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(NewHoliday);

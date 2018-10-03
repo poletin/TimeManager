@@ -13,7 +13,10 @@ import {
   HolidayAction,
   FETCH_HOLIDAYS_SUCCESS,
   SAVE_HOLIDAY_SUCCESS,
-  SAVE_HOLIDAY
+  SAVE_HOLIDAY,
+  ADD_CATEGORY,
+  CATEGORY_FETCH_TIMES,
+  CHANGE_CATEGORY_SETTINGS_SUCCESS
 } from "../actions";
 import moment from "moment";
 import {
@@ -22,6 +25,7 @@ import {
 } from "../utils/IntervallCalculations";
 import NotificationService from "../utils/NotificationService";
 import { calculateFinishedTime } from "../utils/TimeFunctions";
+import ToastService from "../utils/ToastService";
 
 export interface CategoryState {
   categories: { [key: string]: categories.Single };
@@ -64,13 +68,19 @@ export default function category(
         },
         isLoading: false
       };
+    case ADD_CATEGORY:
+      return {
+        ...state,
+        isLoading: true
+      };
     case ADD_CATEGORY_SUCCESS:
       return {
         ...state,
         categories: {
           ...state.categories,
           [action.id]: action.category
-        }
+        },
+        isLoading: false
       };
     case CATEGORY_START_RECORDING:
       const updatedCategory: categories.Single = {
@@ -163,6 +173,14 @@ export default function category(
           [action.selectedCategory]: updatedCategory3
         }
       };
+    case CHANGE_CATEGORY_SETTINGS_SUCCESS:
+      ToastService.showSuccess("Kategorieeinstellungen gespeichert.");
+      return state;
+    case CATEGORY_FETCH_TIMES:
+      return {
+        ...state,
+        isLoading: true
+      };
     case CATEGORY_FETCH_TIMES_SUCCESS:
       const updatedCategor4: categories.Single = {
         ...state.categories[action.categoryId],
@@ -174,7 +192,8 @@ export default function category(
         categories: {
           ...state.categories,
           [action.categoryId]: updatedCategor4
-        }
+        },
+        isLoading: false
       };
     case FETCH_HOLIDAYS_SUCCESS:
       return {
@@ -184,13 +203,19 @@ export default function category(
           ...action.holidays
         }
       };
+    case SAVE_HOLIDAY:
+      return {
+        ...state,
+        isLoading: true
+      };
     case SAVE_HOLIDAY_SUCCESS:
       return {
         ...state,
         holidays: {
           ...state.holidays,
           [action.holidayId]: action.holiday
-        }
+        },
+        isLoading: false
       };
 
     default:

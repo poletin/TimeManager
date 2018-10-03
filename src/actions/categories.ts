@@ -105,6 +105,7 @@ export function addCategorySuccess(
     id
   };
 }
+//
 
 export const CHANGE_CATEGORY_SETTINGS = "CHANGE_CATEGORY_SETTINGS";
 export type CHANGE_CATEGORY_SETTINGS = typeof CHANGE_CATEGORY_SETTINGS;
@@ -121,6 +122,18 @@ export function changeCategorySettings(
     type: CHANGE_CATEGORY_SETTINGS,
     selectedCategory: id,
     updatedSettings
+  };
+}
+
+export const CHANGE_CATEGORY_SETTINGS_SUCCESS =
+  "CHANGE_CATEGORY_SETTINGS_SUCCESS";
+export type CHANGE_CATEGORY_SETTINGS_SUCCESS = typeof CHANGE_CATEGORY_SETTINGS_SUCCESS;
+export interface ChangeCategorySettingsSuccess {
+  type: CHANGE_CATEGORY_SETTINGS_SUCCESS;
+}
+export function changeCategorySettingsSuccess(): ChangeCategorySettingsSuccess {
+  return {
+    type: CHANGE_CATEGORY_SETTINGS_SUCCESS
   };
 }
 
@@ -184,6 +197,7 @@ export type CategoryAction =
   | CategoryRecordingsSent
   | SelectCategory
   | ChangeCategorySettings
+  | ChangeCategorySettingsSuccess
   | CategoryFetchTimes
   | CategoryFetchTimesSuccess
   | AddCategory
