@@ -31,7 +31,6 @@ export interface SaveHoliday {
   holiday: holidays.Holiday;
 }
 export function saveHoliday(holiday: holidays.Holiday): SaveHoliday {
-  console.log("SubmitAction", holiday.name);
   return {
     type: SAVE_HOLIDAY,
     holiday

@@ -35,7 +35,6 @@ export function fetchHolidays() {
 }
 
 export function saveHoliday(holiday: holidays.Holiday) {
-  console.log("SubmitApi", holiday.name);
   const uid = getUid();
   return firebase
     .firestore()

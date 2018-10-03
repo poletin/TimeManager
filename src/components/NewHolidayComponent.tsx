@@ -1,4 +1,3 @@
-import React, { Component } from "react";
 import {
   View,
   Text,
@@ -13,7 +12,7 @@ import {
   Switch,
   Item
 } from "native-base";
-
+import React, { Component } from "react";
 import store from "../store";
 import moment from "moment";
 
@@ -30,7 +29,7 @@ type State = {
   isDayDatePickerVisible: boolean;
   newHoliday: holidays.Holiday;
 };
-export default class NewHolidayForm extends Component<Props, State> {
+export default class NewHolidayComponent extends Component<Props, State> {
   componentWillUnMount() {
     this.setState({
       isStartPickerVisible: false,

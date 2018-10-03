@@ -5,7 +5,7 @@ import * as actions from "../../actions";
 import { saveHoliday, fetchHolidays } from "../../actions";
 import React, { Component } from "react";
 import { View } from "native-base";
-import NewHolidayForm from "../../forms/NewHolidayForm";
+import NewHolidayComponent from "../../components/NewHolidayComponent";
 
 type Props = {
   onSubmit: (data: holidays.Holiday) => void;
@@ -14,9 +14,8 @@ class NewHoliday extends Component<Props> {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <NewHolidayForm
+        <NewHolidayComponent
           onSubmit={(data: holidays.Holiday) => {
-            console.log("SubmitContainer", data.name);
             this.props.onSubmit(data);
           }}
         />
@@ -28,7 +27,7 @@ class NewHoliday extends Component<Props> {
 function mapDispatchToProps(dispatch: Dispatch<actions.HolidayAction>) {
   return {
     onSubmit: (data: holidays.Holiday) => {
-      console.log(dispatch(saveHoliday(data)));
+      dispatch(saveHoliday(data));
     }
   };
 }

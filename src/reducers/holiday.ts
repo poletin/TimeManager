@@ -29,8 +29,6 @@ export default function holiday(
         }
       };
     case SAVE_HOLIDAY_SUCCESS:
-      console.log("ACtionSuccess", action.holidayId, action.holiday);
-
       return {
         ...state,
         holidays: {
