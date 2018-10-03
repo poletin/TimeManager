@@ -1,34 +1,18 @@
+import { Fab, Icon, ListItem, Text, View } from "native-base";
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import {
-  Item,
-  View,
-  Label,
-  Input,
-  Text,
-  Button,
-  Container,
-  Icon,
-  Fab,
-  Content,
-  Footer,
-  ListItem
-} from "native-base";
-import {
-  InjectedFormProps,
   Field,
-  WrappedFieldProps,
   FormErrors,
-  reduxForm,
-  getFormValues
+  formValueSelector,
+  InjectedFormProps,
+  reduxForm
 } from "redux-form";
-import { func } from "prop-types";
-import Categories from "../container/categories/Categories";
-import NumberInput from "./components/NumberInput";
-import TextInput from "./components/TextInput";
 import Checkbox from "./components/Checkbox";
+import NumberInput from "./components/NumberInput";
 import ResetIntervallPicker from "./components/ResetIntervallPicker";
 import Switch from "./components/Switch";
-import store from "../store";
+import TextInput from "./components/TextInput";
 
 type Props = InjectedFormProps<categories.SingleSettings, {}, string> & {
   onSubmit?: (data: categories.SingleSettings) => void;
@@ -36,12 +20,6 @@ type Props = InjectedFormProps<categories.SingleSettings, {}, string> & {
 
 export class CategorySettingsForm extends Component<Props> {
   render() {
-    const state = store.getState();
-    // Get the form values using the redux-forms getFormValues selector function
-    const formValue = getFormValues("categorySettings")(
-      state
-    ) as categories.SingleSettings;
-
     return (
       <View style={{ flex: 1 }}>
         <ListItem>
@@ -65,9 +43,8 @@ export class CategorySettingsForm extends Component<Props> {
           />
         </ListItem>
         <ListItem>
-          {formValue && formValue.isIntervall
-            ? getResetIntervall()
-            : getActiveDays()}
+          <ActiveDays />
+          <ResetIntervall />
         </ListItem>
 
         <Fab
@@ -89,11 +66,6 @@ export class CategorySettingsForm extends Component<Props> {
   }
 }
 
-type FieldProps = WrappedFieldProps & {
-  label: string;
-  name: string;
-};
-
 function validate(
   values: categories.SingleSettings
 ): FormErrors<categories.SingleSettings> {
@@ -112,8 +84,11 @@ export default reduxForm({
   validate
 })(CategorySettingsForm);
 
-function getActiveDays() {
-  return (
+type SubProps = {
+  isIntervall: boolean;
+};
+const ActiveDaysComp = ({ isIntervall }: SubProps) => {
+  return isIntervall ? null : (
     <View style={{ flex: 1 }}>
       <Text style={{ fontSize: 18 }}>Arbeitstage</Text>
       <Field name="activeDays.monday" label="Montag" component={Checkbox} />
@@ -139,10 +114,15 @@ function getActiveDays() {
       <Field name="activeDays.sunday" label="Sonntag" component={Checkbox} />
     </View>
   );
-}
+};
 
-function getResetIntervall() {
-  return (
+const selector = formValueSelector("categorySettings");
+const ActiveDays = connect(state => ({
+  isIntervall: !!selector(state, "isIntervall")
+}))(ActiveDaysComp);
+
+const ResetIntervallComp = ({ isIntervall }: SubProps) => {
+  return isIntervall ? (
     <View>
       <Text style={{ fontSize: 18 }}>Zurücksetzintervall</Text>
       <Field
@@ -156,5 +136,9 @@ function getResetIntervall() {
         component={NumberInput}
       />
     </View>
-  );
-}
+  ) : null;
+};
+
+const ResetIntervall = connect(state => ({
+  isIntervall: !!selector(state, "isIntervall")
+}))(ResetIntervallComp);
