@@ -92,7 +92,7 @@ export default class CardView extends Component<Props> {
             }}
           >
             <Text style={{ fontSize: 50 }}>
-              {formatMinutes(this.props.category.total)}
+              {formatMinutes(this.props.category.total, undefined, false)}
             </Text>
           </View>
         </CardItem>
