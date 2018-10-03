@@ -80,11 +80,17 @@ export default function category(
           started: new Date()
         }
       };
-      if (updatedCategory.total < 0) {
+
+      const requiredMinutes = updatedCategory.isIntervall
+        ? parseFloat(updatedCategory.weeklyTarget) * 60 - updatedCategory.total
+        : -updatedCategory.total;
+
+      const finishedTime = calculateFinishedTime(requiredMinutes);
+      if (moment().isBefore(finishedTime)) {
         NotificationService.scheduleCategoryDoneNotification(
           action.categoryId,
           updatedCategory.name,
-          calculateFinishedTime(updatedCategory.total)
+          finishedTime
         );
       }
       return {

@@ -27,6 +27,6 @@ export const formatDateTime = (date: Date) =>
 
 export const calculateFinishedTime = (minutes: number) => {
   return moment()
-    .subtract(minutes, "minutes")
+    .add(minutes, "minutes")
     .toDate();
 };
