@@ -19,7 +19,7 @@ export async function fetchPublicHolidays(state: string, year: string) {
           hint: publicHoliday.hinweis
         };
       })
-      .filter(entry => entry.hint === "")
+      .filter(entry => entry.hint === "" && moment().isBefore(entry.date))
       .map(entry => ({
         name: entry.name,
         isFullDay: true,

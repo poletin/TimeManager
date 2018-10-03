@@ -188,7 +188,7 @@ export default class HolidayScreen extends Component<Props, State> {
   getYearPickerItems() {
     let items: string[] = [];
     const currentYear = new Date().getFullYear();
-    for (let i = currentYear - 5; i <= currentYear + 10; i++) {
+    for (let i = currentYear; i <= currentYear + 10; i++) {
       items.push(i + "");
     }
     return items;

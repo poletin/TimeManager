@@ -45,6 +45,8 @@ export default class NewHolidayComponent extends Component<Props, State> {
       newHoliday: {
         name: "",
         isFullDay: true,
+        startDay: new Date(),
+        endDay: new Date(),
         hours: 0
       }
     };
@@ -235,6 +237,12 @@ export default class NewHolidayComponent extends Component<Props, State> {
       ToastService.showError("Name nicht gesetzt.");
       return false;
     }
+
+    if (moment().isSameOrAfter(this.state.newHoliday.startDay)) {
+      ToastService.showError("Abwesenheit nur in der Zukunft.");
+      return false;
+    }
+
     if (this.state.newHoliday.isFullDay) {
       if (!this.state.newHoliday.startDay) {
         ToastService.showError("Starttag nicht gesetzt.");
