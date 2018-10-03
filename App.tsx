@@ -28,6 +28,7 @@ import NewCategoryScreen from "./src/screens/NewCategoryScreen";
 import NavigationService from "./src/utils/NavigationService";
 import CategoryDetailsScreen from "./src/screens/CategoryDetailsScreen";
 import HolidayScreen from "./src/screens/HolidayScreen";
+import NewHolidayScreen from "./src/screens/NewHolidayScreen";
 
 const MyApp = createDrawerNavigator(
   {
@@ -51,6 +52,9 @@ const MyApp = createDrawerNavigator(
     },
     Holidays: {
       screen: HolidayScreen
+    },
+    NewHoliday: {
+      screen: NewHolidayScreen
     }
   },
   {

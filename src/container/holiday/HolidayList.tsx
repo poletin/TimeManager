@@ -16,7 +16,7 @@ class HolidayList extends Component<Props> {
     return Object.keys(this.props.holidays)
       .sort()
       .map((key: string) => (
-        <ListItem>
+        <ListItem key={key}>
           <Left
             style={{
               flex: 1,

@@ -28,10 +28,13 @@ export const SAVE_HOLIDAY = "SAVE_HOLIDAY";
 export type SAVE_HOLIDAY = typeof SAVE_HOLIDAY;
 export interface SaveHoliday {
   type: SAVE_HOLIDAY;
+  holiday: holidays.Holiday;
 }
-export function saveHoliday(): SaveHoliday {
+export function saveHoliday(holiday: holidays.Holiday): SaveHoliday {
+  console.log("SubmitAction", holiday.name);
   return {
-    type: SAVE_HOLIDAY
+    type: SAVE_HOLIDAY,
+    holiday
   };
 }
 
@@ -39,10 +42,17 @@ export const SAVE_HOLIDAY_SUCCESS = "SAVE_HOLIDAY_SUCCESS";
 export type SAVE_HOLIDAY_SUCCESS = typeof SAVE_HOLIDAY_SUCCESS;
 export interface SaveHolidaySuccess {
   type: SAVE_HOLIDAY_SUCCESS;
+  holiday: holidays.Holiday;
+  holidayId: string;
 }
-export function saveHolidaySuccess(): SaveHolidaySuccess {
+export function saveHolidaySuccess(
+  holiday: holidays.Holiday,
+  holidayId: string
+): SaveHolidaySuccess {
   return {
-    type: SAVE_HOLIDAY_SUCCESS
+    type: SAVE_HOLIDAY_SUCCESS,
+    holiday,
+    holidayId
   };
 }
 

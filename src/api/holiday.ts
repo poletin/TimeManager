@@ -33,3 +33,17 @@ export function fetchHolidays() {
       .catch(reject);
   });
 }
+
+export function saveHoliday(holiday: holidays.Holiday) {
+  console.log("SubmitApi", holiday.name);
+  const uid = getUid();
+  return firebase
+    .firestore()
+    .collection("users")
+    .doc(uid)
+    .collection("holidays")
+    .add(holiday)
+    .then(docRef => {
+      return docRef.id;
+    });
+}

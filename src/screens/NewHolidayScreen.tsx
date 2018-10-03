@@ -8,20 +8,18 @@ import {
   Button,
   Body,
   Title,
-  Right,
-  Footer,
-  Fab
+  Right
 } from "native-base";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import HolidayList from "../container/holiday/HolidayList";
+import NewHoliday from "../container/holiday/NewHoliday";
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState>;
 };
 
-export default class HolidayScreen extends Component<Props> {
+export default class NewHolidayScreen extends Component<Props> {
   static navigationOptions = {
-    drawerLabel: "Freie Tage",
+    drawerLabel: "Neue Abwesenheit",
     drawerIcon: () => <Icon name="calendar" />
   };
 
@@ -32,32 +30,20 @@ export default class HolidayScreen extends Component<Props> {
           <Left>
             <Button
               transparent
-              onPress={() => this.props.navigation.openDrawer()}
+              onPress={() => this.props.navigation.navigate("Holidays")}
             >
-              <Icon name="menu" />
+              <Icon name="arrow-back" />
             </Button>
           </Left>
           <Body>
-            <Title>Freie Tage</Title>
+            <Title>Neue Abwesenheit</Title>
           </Body>
           <Right />
         </Header>
 
         <Content padder style={{ flex: 1 }} contentContainerStyle={{ flex: 1 }}>
-          <HolidayList />
+          <NewHoliday />
         </Content>
-        <Footer>
-          <Fab
-            containerStyle={{}}
-            style={{ backgroundColor: "#5067FF" }}
-            position="bottomRight"
-            onPress={() => {
-              this.props.navigation.navigate("NewHoliday");
-            }}
-          >
-            <Icon type="MaterialIcons" name="add" />
-          </Fab>
-        </Footer>
       </Container>
     );
   }
