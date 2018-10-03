@@ -58,10 +58,12 @@ export const USER_SIGNIN_FAILED = "USER_SIGNIN_FAILED";
 export type USER_SIGNIN_FAILED = typeof USER_SIGNIN_FAILED;
 export interface UserSignInFailed {
   type: USER_SIGNIN_FAILED;
+  error: RNFirebase.RnError;
 }
-export function userSignInFailed(): UserSignInFailed {
+export function userSignInFailed(error: RNFirebase.RnError): UserSignInFailed {
   return {
-    type: USER_SIGNIN_FAILED
+    type: USER_SIGNIN_FAILED,
+    error
   };
 }
 

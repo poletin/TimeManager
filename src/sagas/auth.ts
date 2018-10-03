@@ -41,8 +41,8 @@ function* _signIn(action: UserSignInEmail | UserSignInAnon | UserSignUpEmail) {
     }
     yield put(userSignInSuccess(user));
   } catch (error) {
-    console.error(error);
-    yield put(userSignInFailed());
+    const e: RNFirebase.RnError = error;
+    yield put(userSignInFailed(e));
   }
 }
 

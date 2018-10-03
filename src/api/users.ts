@@ -9,19 +9,13 @@ export function signInAnonym() {
       if (credential) {
         return credential.user;
       }
-    })
-    .catch(reason => {
-      console.error(reason);
     });
 }
 
 export function signInEmail(credentials: auth.LoginFormData) {
   return firebase
     .auth()
-    .signInAndRetrieveDataWithEmailAndPassword(
-      credentials.email,
-      credentials.pwd
-    )
+    .signInWithEmailAndPassword(credentials.email, credentials.pwd)
     .then(credentials => {
       return credentials.user;
     });
@@ -30,10 +24,7 @@ export function signInEmail(credentials: auth.LoginFormData) {
 export function signUpEmail(credentials: auth.LoginFormData) {
   return firebase
     .auth()
-    .createUserAndRetrieveDataWithEmailAndPassword(
-      credentials.email,
-      credentials.pwd
-    )
+    .createUserWithEmailAndPassword(credentials.email, credentials.pwd)
     .then(credentials => {
       return credentials.user;
     });

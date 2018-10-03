@@ -10,7 +10,8 @@ export default {
   showError(message: string) {
     Toast.show({
       text: message,
-      type: "danger"
+      type: "danger",
+      duration: 4000
     });
   }
 };
