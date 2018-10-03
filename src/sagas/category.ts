@@ -17,7 +17,8 @@ import {
   addCategorySuccess,
   CATEGORY_ADD_MANUAL_TIME,
   CategoryAddManualTime,
-  FETCH_CATEGORY_DATA
+  FETCH_CATEGORY_DATA,
+  fetchHolidaysSuccess
 } from "../actions";
 
 import { call, put, takeLatest, select, takeEvery } from "redux-saga/effects";
@@ -26,13 +27,16 @@ import {
   updateCategory,
   uploadTimeRecordings,
   fetchTimesOfCategory,
-  addCategory
+  addCategory,
+  fetchHolidays
 } from "../api";
 import { StoreState } from "../reducers";
 import NavigationService from "../utils/NavigationService";
 
 function* _fetchCategoryData(action: AuthAction) {
+  const holidayData: holidays.HolidayMap = yield call(fetchHolidays);
   const categoryData: categories.CategoryMap = yield call(fetchCategoryData);
+  yield put(fetchHolidaysSuccess(holidayData));
   yield put(fetchCategorySuccess(categoryData));
 }
 

@@ -16,8 +16,6 @@ import { fetchHolidays } from "../api/holiday";
 function* _fetchUserData(action: UserAction) {
   try {
     const userData: user.User = yield call(fetchUserData);
-    const holidays: holidays.HolidayMap = yield call(fetchHolidays);
-    yield put(fetchHolidaysSuccess(holidays));
     yield put(fetchUserDataSuccess(userData));
   } catch (error) {
     console.error(error);

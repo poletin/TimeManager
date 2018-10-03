@@ -1,4 +1,6 @@
-import moment from "moment";
+import moment, { Moment } from "moment";
+import category from "../reducers/category";
+import Categories from "../container/categories/Categories";
 
 export function isContinuous(category: categories.Single) {
   return !category.isIntervall;
@@ -11,12 +13,15 @@ export function isInInterval(category: categories.Single, date: Date) {
   return moment(category.lastUpdate, "DD.MM.YYYY").isSameOrBefore(date);
 }
 
-export function calculateIntervalls(categories: categories.CategoryMap) {
+export function calculateIntervalls(
+  categories: categories.CategoryMap,
+  holidays: holidays.HolidayMap
+) {
   const updatedCategories: categories.CategoryMap = {};
   Object.keys(categories).forEach(key => {
     const currCategory = categories[key];
     if (isContinuous(currCategory)) {
-      updatedCategories[key] = handleEndlessIntervall(currCategory);
+      updatedCategories[key] = handleEndlessIntervall(currCategory, holidays);
     } else {
       updatedCategories[key] = handleEndingIntervall(currCategory);
     }
@@ -24,7 +29,10 @@ export function calculateIntervalls(categories: categories.CategoryMap) {
   return updatedCategories;
 }
 
-function handleEndlessIntervall(category: categories.Single) {
+function handleEndlessIntervall(
+  category: categories.Single,
+  holidays: holidays.HolidayMap
+) {
   const weeklyTarget = category.weeklyTarget;
   let currentTotal = category.total;
   const activeDays = category.activeDays;
@@ -41,14 +49,19 @@ function handleEndlessIntervall(category: categories.Single) {
     (activeDays.friday ? 1 : 0) +
     (activeDays.saturday ? 1 : 0) +
     (activeDays.sunday ? 1 : 0);
-  const minutsPerDay = (parseInt(weeklyTarget) * 60) / dayCount;
+  const minutesPerDay = (parseInt(weeklyTarget) * 60) / dayCount;
   let lastChecked = moment(lastUpdate, "DD.MM.YYYY");
   do {
     lastChecked = lastChecked.add(1, "day");
     const dayOfWeek = lastChecked.format("E");
     const isActive = formatActiveDays(activeDays)[dayOfWeek];
     if (isActive) {
-      currentTotal = currentTotal - minutsPerDay;
+      currentTotal = _calculateNewTotal(
+        holidays,
+        lastChecked,
+        currentTotal,
+        minutesPerDay
+      );
     }
   } while (lastChecked.format("DD.MM.YYYY") !== currentDay);
   return {
@@ -87,4 +100,35 @@ function formatActiveDays(
     "6": activeDays.saturday,
     "7": activeDays.sunday
   };
+}
+
+export function isHoliday(holidays: holidays.HolidayMap, day: Moment) {
+  Object.keys(holidays).forEach(key => {
+    const currHoliday = holidays[key];
+    const startDay = moment(currHoliday.startDay);
+    const endDay = moment(currHoliday.endDay);
+    if (day.isBetween(startDay, endDay, undefined, "[]")) {
+      return key;
+    }
+  });
+  return "";
+}
+
+function _calculateNewTotal(
+  holidays: holidays.HolidayMap,
+  lastChecked: Moment,
+  currentTotal: number,
+  minutesPerDay: number
+) {
+  const holidayKey: string = isHoliday(holidays, lastChecked);
+  if (holidayKey) {
+    const holiday: holidays.Holiday = holidays[holidayKey];
+    if (holiday.isFullDay) {
+      return currentTotal;
+    }
+    if (holiday.hours) {
+      return currentTotal - (minutesPerDay - holiday.hours * 60);
+    }
+  }
+  return currentTotal - minutesPerDay;
 }

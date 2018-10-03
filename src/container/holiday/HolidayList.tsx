@@ -49,9 +49,9 @@ class HolidayList extends Component<Props> {
   }
 }
 
-function mapStateToProps({ holiday }: StoreState) {
+function mapStateToProps(holiday: StoreState) {
   return {
-    holidays: holiday.holidays
+    holidays: holiday.category.holidays
   };
 }
 

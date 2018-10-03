@@ -9,7 +9,11 @@ import {
   CATEGORY_FETCH_TIMES_SUCCESS,
   ADD_CATEGORY_SUCCESS,
   CATEGORY_ADD_MANUAL_TIME,
-  FETCH_CATEGORY_DATA
+  FETCH_CATEGORY_DATA,
+  HolidayAction,
+  FETCH_HOLIDAYS_SUCCESS,
+  SAVE_HOLIDAY_SUCCESS,
+  SAVE_HOLIDAY
 } from "../actions";
 import moment from "moment";
 import {
@@ -24,6 +28,7 @@ export interface CategoryState {
   unsentRecordings: categories.Recording[];
   categorySettings: categories.SettingsView;
   isLoading: boolean;
+  holidays: holidays.HolidayMap;
 }
 
 const defaultValue: CategoryState = {
@@ -32,12 +37,13 @@ const defaultValue: CategoryState = {
   categorySettings: {
     selectedCategory: ""
   },
-  isLoading: true
+  isLoading: true,
+  holidays: {}
 };
 
 export default function category(
   state: CategoryState = defaultValue,
-  action: CategoryAction
+  action: CategoryAction | HolidayAction
 ): CategoryState {
   switch (action.type) {
     case FETCH_CATEGORY_DATA:
@@ -46,7 +52,10 @@ export default function category(
         isLoading: true
       };
     case FETCH_CATEGORY_DATA_SUCCESS:
-      const categories = calculateIntervalls(action.categoryData);
+      const categories = calculateIntervalls(
+        action.categoryData,
+        state.holidays
+      );
       return {
         ...state,
         categories: categories,
@@ -161,11 +170,27 @@ export default function category(
           [action.categoryId]: updatedCategor4
         }
       };
+    case FETCH_HOLIDAYS_SUCCESS:
+      return {
+        ...state,
+        holidays: {
+          ...state.holidays,
+          ...action.holidays
+        }
+      };
+    case SAVE_HOLIDAY_SUCCESS:
+      return {
+        ...state,
+        holidays: {
+          ...state.holidays,
+          [action.holidayId]: action.holiday
+        }
+      };
+
     default:
       return state;
   }
 }
-
 function updateCategoryTime(
   startTime: Date,
   stopTime: Date,
