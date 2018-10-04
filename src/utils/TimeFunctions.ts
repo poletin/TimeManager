@@ -5,8 +5,8 @@ import momentDurationFormatSetup from "moment-duration-format";
 momentDurationFormatSetup(moment);
 
 export const formatTimeSince = (startTime: Date) => {
-  const diff = moment.duration(moment().diff(startTime));
-  return diff.format("hh:*mm:ss");
+  const diff = moment().diff(startTime, "seconds") / 60;
+  return formatMinutes(diff);
 };
 
 export const calculateDiff = (minutes: number, startTime: Date) => {
