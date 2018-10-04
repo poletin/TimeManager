@@ -65,6 +65,7 @@ export default class CardView extends Component<Props> {
               }}
             >
               <Timer
+                numberOfLines={1}
                 style={{ fontSize: 50 }}
                 startTime={this.props.category.recordingData.started!}
                 baseTime={this.props.category.total}
@@ -72,8 +73,13 @@ export default class CardView extends Component<Props> {
               <Text>Insgesamt</Text>
             </View>
           </Left>
-          <Right>
+          <Right
+            style={{
+              flex: 1
+            }}
+          >
             <Timer
+              numberOfLines={1}
               style={{ fontSize: 50 }}
               startTime={this.props.category.recordingData.started!}
             />
@@ -91,7 +97,7 @@ export default class CardView extends Component<Props> {
               alignItems: "center"
             }}
           >
-            <Text style={{ fontSize: 50 }}>
+            <Text style={{ fontSize: 50 }} numberOfLines={1}>
               {formatMinutes(this.props.category.total, undefined, false)}
             </Text>
           </View>

@@ -71,7 +71,7 @@ function handleEndlessIntervall(
   };
 }
 function handleEndingIntervall(category: categories.Single) {
-  const lastUpdate = category.lastUpdate;
+  let lastUpdate = category.lastUpdate;
   const currentDay = moment();
   let currentTotal = category.total;
   const nextUpdate = moment(lastUpdate, "DD.MM.YYYY").add(
@@ -81,11 +81,12 @@ function handleEndingIntervall(category: categories.Single) {
   );
   if (nextUpdate.isSameOrBefore(currentDay)) {
     currentTotal = 0;
+    lastUpdate = currentDay.format("DD.MM.YYYY");
   }
   return {
     ...category,
     total: currentTotal,
-    lastUpdate: currentDay.format("DD.MM.YYYY")
+    lastUpdate: lastUpdate
   };
 }
 function formatActiveDays(
