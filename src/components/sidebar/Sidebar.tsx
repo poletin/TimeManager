@@ -22,25 +22,9 @@ const pages = [
     icon: "home"
   },
   {
-    name: "Einstellungen",
+    name: "Benutzereinstellungen",
     route: "Settings",
     icon: "settings"
-  },
-  {
-    name: "Kategorieeinstellungen",
-    route: "CategorySettings",
-    icon: "paper",
-    param: {
-      from: "drawer"
-    }
-  },
-  {
-    name: "Inisghts",
-    route: "CategoryInsights",
-    icon: "trending-up",
-    param: {
-      from: "drawer"
-    }
   },
   {
     name: "Freie Tage",

@@ -16,7 +16,6 @@ declare namespace auth {
 declare namespace user {
   export interface User {
     name: string;
-    dualStudent: boolean;
   }
 }
 

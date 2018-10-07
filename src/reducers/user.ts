@@ -9,8 +9,7 @@ import ToastService from "../utils/ToastService";
 export interface UserState extends user.User {}
 
 const defaultValue: UserState = {
-  name: "",
-  dualStudent: false
+  name: ""
 };
 
 export default function user(

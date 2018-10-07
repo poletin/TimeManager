@@ -1,26 +1,7 @@
 import React, { Component } from "react";
-import {
-  Item,
-  View,
-  Label,
-  Input,
-  Text,
-  Button,
-  Fab,
-  Icon,
-  CheckBox,
-  ListItem
-} from "native-base";
-import {
-  InjectedFormProps,
-  Field,
-  WrappedFieldProps,
-  FormErrors,
-  reduxForm
-} from "redux-form";
-import Checkbox from "./components/Checkbox";
+import { View, Fab, Icon, ListItem } from "native-base";
+import { InjectedFormProps, Field, FormErrors, reduxForm } from "redux-form";
 import TextInput from "./components/TextInput";
-import Switch from "./components/Switch";
 
 type Props = InjectedFormProps<user.User, {}, string> & {
   onSubmit?: (data: user.User) => void;
@@ -32,14 +13,6 @@ class CategorySettingsForm extends Component<Props> {
       <View style={{ flex: 1 }}>
         <ListItem>
           <Field name="name" label="Name" component={TextInput} />
-        </ListItem>
-        <ListItem>
-          <Field
-            label="Dualer Student"
-            name="dualStudent"
-            type="checkbox"
-            component={Switch}
-          />
         </ListItem>
         <Fab
           containerStyle={{}}
