@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import { StoreState } from "../../reducers";
 import { Dispatch } from "redux";
 import * as actions from "../../actions";
-import { saveHoliday, fetchHolidays } from "../../actions";
+import { saveHoliday } from "../../actions";
 import React, { Component } from "react";
 import { View } from "native-base";
 import NewHolidayComponent from "../../components/NewHolidayComponent";

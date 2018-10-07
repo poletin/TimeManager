@@ -1,6 +1,6 @@
 import React from "react";
 import { WrappedFieldProps } from "redux-form";
-import { Item, CheckBox, Label, Switch, Left, Right, Text } from "native-base";
+import { Item, Switch, Left, Right, Text } from "native-base";
 
 type Props = WrappedFieldProps & {
   label: string;

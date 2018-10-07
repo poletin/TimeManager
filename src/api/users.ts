@@ -1,5 +1,5 @@
 import { UserState } from "../reducers/user";
-import firebase, { RNFirebase } from "react-native-firebase";
+import firebase from "react-native-firebase";
 
 export function signInAnonym() {
   return firebase

@@ -3,11 +3,10 @@ import { View, Text } from "react-native";
 import { connect } from "react-redux";
 import { StoreState } from "../../reducers";
 import * as actions from "../../actions";
-import { ListItem, Body, Left, Right, H1, H2, List, H3 } from "native-base";
+import { ListItem, List } from "native-base";
 import { Dispatch } from "redux";
-import { changeCategorySettings, categoryFetchTimes } from "../../actions";
+import { categoryFetchTimes } from "../../actions";
 import moment from "moment";
-import { formatMinutes } from "../../utils/TimeFunctions";
 import InsightListItem from "../../components/categories/insights/InsightListItem";
 import BusyOverlay from "../../components/commons/BusyOverlay";
 

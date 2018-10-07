@@ -3,7 +3,7 @@ import { StoreState } from "../../../reducers";
 import { Dispatch } from "redux";
 import * as actions from "../../../actions";
 import React, { Component } from "react";
-import { Form, Picker, Icon, Item } from "native-base";
+import { Form, Picker, Item } from "native-base";
 import { selectCategory } from "../../../actions";
 
 type Props = {

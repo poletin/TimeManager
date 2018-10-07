@@ -2,16 +2,13 @@ import {
   UserAction,
   USER_SIGNIN_SUCCESS,
   fetchUserDataSuccess,
-  SAVE_USER_SETTINGS,
   CHANGE_USER_SETTINGS,
   ChangeUserSettings,
-  saveUserSettingsSuccess,
-  fetchHolidaysSuccess
+  saveUserSettingsSuccess
 } from "../actions";
 import { call, put, takeLatest } from "redux-saga/effects";
 import { fetchUserData, saveUserSettings } from "../api";
 import { StoreState } from "../reducers";
-import { fetchHolidays } from "../api/holiday";
 
 function* _fetchUserData(action: UserAction) {
   try {

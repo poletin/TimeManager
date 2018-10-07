@@ -1,5 +1,3 @@
-import { RNFirebase } from "react-native-firebase";
-
 export const FETCH_CATEGORY_DATA_SUCCESS = "FETCH_CATEGORY_DATA_SUCCESS";
 export type FETCH_CATEGORY_DATA_SUCCESS = typeof FETCH_CATEGORY_DATA_SUCCESS;
 export interface FetchCategorySuccess {

@@ -8,8 +8,7 @@ import {
   Button,
   Body,
   Title,
-  Right,
-  Text
+  Right
 } from "native-base";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import CategorySelection from "../container/categories/settings/CategorySelection";

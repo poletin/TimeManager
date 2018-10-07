@@ -1,6 +1,4 @@
 import moment, { Moment } from "moment";
-import category from "../reducers/category";
-import Categories from "../container/categories/Categories";
 
 export function isContinuous(category: categories.Single) {
   return !category.isIntervall;

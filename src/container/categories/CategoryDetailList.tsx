@@ -2,11 +2,7 @@ import React, { Component } from "react";
 import { View, Text, List, ListItem, Left, H2, H1, Right } from "native-base";
 import { connect } from "react-redux";
 import { StoreState } from "../../reducers";
-import {
-  formatDate,
-  formatMinutes,
-  formatDateTime
-} from "../../utils/TimeFunctions";
+import { formatMinutes, formatDateTime } from "../../utils/TimeFunctions";
 import { Dispatch } from "redux";
 import { CategoryAction, categoryFetchTimes } from "../../actions";
 import BusyOverlay from "../../components/commons/BusyOverlay";

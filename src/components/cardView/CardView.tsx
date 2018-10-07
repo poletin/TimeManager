@@ -11,7 +11,7 @@ import {
   Right
 } from "native-base";
 import Timer from "./Timer";
-import { formatMinutes, formatDate } from "../../utils/TimeFunctions";
+import { formatMinutes } from "../../utils/TimeFunctions";
 
 type Props = {
   category: categories.Single;

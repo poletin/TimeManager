@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { Text, Button, View, Spinner, Container } from "native-base";
-import { StyleSheet, Modal, ActivityIndicator } from "react-native";
+import { Text, View, Spinner } from "native-base";
+import { StyleSheet, Modal } from "react-native";
 
 type Props = {
   cancelable?: boolean;

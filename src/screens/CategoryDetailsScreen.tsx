@@ -12,11 +12,7 @@ import {
   Text,
   Footer,
   Fab,
-  View,
-  ListItem,
-  Item,
-  Grid,
-  Col
+  View
 } from "native-base";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import CategoryDetailList from "../container/categories/CategoryDetailList";
